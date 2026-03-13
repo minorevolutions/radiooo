@@ -123,12 +123,20 @@ audio{display:none;}
   /* player: live pip | ticker | play button only */
   .player-row{grid-template-columns:auto 1fr auto;}
   .pr-cell.pr-wave{display:none;}
-  /* hide vol cell entirely on mobile */
-  .pr-cell:nth-child(4){display:none;}
-  .pbtn{min-width:5rem;font-size:0.85rem;padding:0 1rem;}
-  /* status row: time | date | on air (hide weather) */
-  .status-row{grid-template-columns:1fr 1fr 1fr;}
-  .status-row .sr-cell:nth-child(3){display:none;}
+  /* bigger masthead */
+  .frame{grid-template-rows:3.5rem 3rem auto auto auto;}
+  .masthead{grid-template-rows:3.5rem;}
+  .logo-ph-box{font-size:0.9rem;padding:0.4rem 0.8rem;}
+  #site-logo{height:2.2rem!important;}
+  #theme-toggle{font-size:1rem;padding:0.3rem 0.8rem;}
+  /* bigger play button */
+  .player-row{grid-template-rows:3rem;}
+  .pbtn{min-width:6rem;font-size:1rem;padding:0 1.2rem;}
+  .pbtn svg{width:13px;height:13px;}
+  .live-lbl{font-size:0.75rem;}
+  .pip{width:9px;height:9px;}
+  /* hide status row entirely on mobile */
+  .status-row{display:none;}
   /* body stack */
   .body{grid-template-columns:1fr;height:auto;overflow:visible;display:flex;flex-direction:column;}
   .col{height:auto;min-height:0;overflow:visible;border-left:none;border-top:0.5px solid var(--line);order:3;}
@@ -354,14 +362,28 @@ const PASTELS=[
   {bg:'#eaf5e8',fg:'#0e2c12',dim:'#3f7a45',accent:'#4aa050'},
 ];
 let pastelIdx=0,pastelTimer=null;
-function applyPastel(p){['bg','fg','dim','accent'].forEach(k=>document.body.style.setProperty('--'+k,p[k]));}
+function applyPastel(p){
+  document.body.style.setProperty('--bg',p.bg);
+  document.body.style.setProperty('--fg',p.fg);
+  document.body.style.setProperty('--dim',p.dim);
+  document.body.style.setProperty('--accent',p.accent);
+  document.body.style.setProperty('--line','rgba(90,50,20,0.18)');
+}
 function startPastels(){applyPastel(PASTELS[pastelIdx]);pastelTimer=setInterval(()=>{pastelIdx=(pastelIdx+1)%PASTELS.length;applyPastel(PASTELS[pastelIdx]);},9000);}
-function stopPastels(){clearInterval(pastelTimer);['bg','fg','dim','accent'].forEach(k=>document.body.style.removeProperty('--'+k));}
+function stopPastels(){
+  clearInterval(pastelTimer);
+  ['bg','fg','dim','accent','line'].forEach(k=>document.body.style.removeProperty('--'+k));
+}
 const themeBtn=document.getElementById('theme-toggle');
 themeBtn.addEventListener('click',()=>{
   document.body.classList.toggle('day');
-  if(document.body.classList.contains('day')){themeBtn.textContent='☾';startPastels();}
-  else{themeBtn.textContent='☀';stopPastels();}
+  if(document.body.classList.contains('day')){
+    themeBtn.textContent='\u263E';
+    startPastels();
+  } else {
+    themeBtn.textContent='\u2600';
+    stopPastels();
+  }
 });
 
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
