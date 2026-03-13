@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  --bg:#000000;
+  --bg:#171612;
   --fg:#c8c4b8;
   --dim:#6b6860;
   --line:rgba(200,196,184,0.18);
@@ -379,7 +379,7 @@ audio{display:none;}
       <a href="#schedule">Schedule</a>
       <a href="#djs">DJs</a>
       <a href="#about">About</a>
-      <a href="mailto:cierra.peters@yale.edu">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#29414c454546694f4645425e465b454d5b484d4046074a4644">Contact</a>
     </nav>
   </div>
 
@@ -393,7 +393,7 @@ audio{display:none;}
       <div class="wave" id="wave"><b></b><b></b><b></b><b></b><b></b><b></b></div>
     </div>
     <div class="pr-cell">
-      <div class="now-playing">Folk World Radio &mdash; <em id="slbl">on air</em></div>
+      <div class="now-playing">Folk World Radio &mdash; <em id="slbl">off air</em></div>
     </div>
     <div class="pr-cell">
       <div class="vol-row">
@@ -428,8 +428,8 @@ audio{display:none;}
       <div class="col-scroll" id="schedule">
         <ul style="list-style:none;">
           <li class="si" data-idx="0" data-show="ROOTS &amp; ROUTES" data-host="Amara Osei" data-desc="African folk traditions and the global diaspora — field recordings, griot music, and contemporary roots from across the continent and its scattered worlds." data-genres="Folk,Diaspora,World">
-            <div class="si-time">MON · 5AM</div>
-            <div class="si-info"><div class="si-name">Rituals</div><div class="si-host">Cierra</div></div>
+            <div class="si-time">MON · 9AM</div>
+            <div class="si-info"><div class="si-name">Roots &amp; Routes</div><div class="si-host">Amara Osei</div></div>
             <div class="si-arrow">›</div>
           </li>
           <div class="si-detail" id="detail-0"><p>African folk traditions and the global diaspora — field recordings, griot music, and contemporary roots from across the continent and its scattered worlds.</p><div class="si-genres"><span class="gtag">Folk</span><span class="gtag">Diaspora</span><span class="gtag">World</span></div></div>
@@ -518,7 +518,7 @@ audio{display:none;}
       </div>
 
       <div class="contact-block">
-        <a href="mailto:hello@folkworldradio.com">hello@folkworldradio.com</a>
+        <a href="/cdn-cgi/l/email-protection#59313c353536193f3635322e362b353d2b383d3036773a3634"><span class="__cf_email__" data-cfemail="58303d343437183e3734332f372a343c2a393c3137763b3735">[email&#160;protected]</span></a>
         <a href="#">Instagram</a>
         <a href="#">Mixcloud</a>
         <a href="#">Newsletter</a>
@@ -536,7 +536,7 @@ audio{display:none;}
 
 </div><!-- /frame -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── PLAYER ──
 const aud=document.getElementById('aud');
 const pbtn=document.getElementById('pbtn');
@@ -656,15 +656,22 @@ document.querySelectorAll('.dj').forEach(dj=>{
 // ── AIRTIME LIVE API ──
 async function fetchAirtime(){
   try{
-    const r=await fetch('https://folkworld.out.airtime.pro/api/live-info-v2');
+    // Use live-info (v1) — structure: previous, current, next, currentShow[], nextShow[]
+    const r=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/live-info?limit=20');
     const d=await r.json();
 
     // ── NOW PLAYING ──
-    const currentTrack=d.tracks?.current;
-    const currentShow=d.shows?.current;
-    const nextShow=d.shows?.next;
+    const currentTrack=d.current;
+    const currentShow=Array.isArray(d.currentShow)?d.currentShow[0]:d.currentShow;
+    const nextShow=Array.isArray(d.nextShow)?d.nextShow[0]:d.nextShow;
 
-    if(currentTrack?.name&&playing) slbl.textContent=currentTrack.name;
+    const fmtTrack=t=>{
+      const artist=t?.metadata?.artist_name||t?.artist_name||'';
+      const title=t?.metadata?.track_title||t?.track_title||t?.name||'';
+      return artist&&title?`${artist} — ${title}`:title||artist||t?.name||'';
+    };
+    const currentName=fmtTrack(currentTrack);
+    if(currentName&&playing) slbl.textContent=currentName;
     else if(currentShow?.name) slbl.textContent=currentShow.name;
 
     // ── ON AIR STATUS ──
@@ -673,7 +680,6 @@ async function fetchAirtime(){
     if(currentShow?.name){
       onairEl.textContent=currentShow.name;
       nextBlock.classList.remove('show');
-      // highlight matching schedule row
       document.querySelectorAll('.si').forEach(el=>el.classList.remove('on-air'));
       document.querySelectorAll('.si').forEach(el=>{
         if(el.querySelector('.si-name')?.textContent.toLowerCase().includes(
@@ -692,13 +698,11 @@ async function fetchAirtime(){
       }
     }
 
-    // ── LIVE SCHEDULE from API ──
-    // Airtime week schedule endpoint
+    // ── LIVE SCHEDULE from week-info ──
     try{
-      const sr=await fetch('https://folkworld.out.airtime.pro/api/week-info');
+      const sr=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/week-info');
       const sd=await sr.json();
       const allShows=Object.values(sd).flat().filter(s=>s&&s.name);
-      // deduplicate by name, keep unique shows
       const seen=new Set();
       const unique=allShows.filter(s=>{
         const key=s.name.toLowerCase();
@@ -721,27 +725,45 @@ async function fetchAirtime(){
       });
     }catch{}
 
-    // ── 5 RECENT TRACKS ──
-    const prev=d.tracks?.previous||[];
+    // ── 20 RECENT TRACKS ──
     const tracks=[];
-    if(currentTrack?.name) tracks.push({name:currentTrack.name,current:true});
-    prev.slice(0,4).forEach(t=>{if(t?.name) tracks.push({name:t.name,current:false});});
+    if(currentName) tracks.push({name:currentName,current:true});
+
+    // item-history-feed is the best source for play history
+    try{
+      const hr=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/item-history-feed?limit=20');
+      const hd=await hr.json();
+      const items=Array.isArray(hd)?hd:Object.values(hd);
+      items.forEach(t=>{
+        const artist=t?.artist_name||t?.metadata?.artist_name||'';
+        const title=t?.track_title||t?.metadata?.track_title||t?.name||'';
+        const name=artist&&title?`${artist} — ${title}`:title||artist||t?.name;
+        if(name&&!tracks.find(x=>x.name===name))
+          tracks.push({name,current:false});
+      });
+    }catch{}
+
+    // fallback: at least show previous from live-info
+    if(tracks.length<=1&&d.previous?.name)
+      tracks.push({name:d.previous.name,current:false});
 
     const tb=document.getElementById('tracks');
-    if(tracks.length){
-      tb.innerHTML=tracks.map((t,i)=>
+    const display=tracks.slice(0,20);
+    if(display.length){
+      tb.innerHTML=display.map((t,i)=>
         `<div class="track"><span class="track-n">${i+1}</span><span class="track-name${t.current?' current':''}">${t.name}</span></div>`
       ).join('');
     } else {
-      tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no track data yet</span></div>';
+      tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no tracks logged yet</span></div>';
     }
 
   }catch(e){
     console.warn('Airtime API:',e);
+    document.getElementById('tracks').innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">unavailable</span></div>';
   }
 }
 fetchAirtime();
-setInterval(fetchAirtime,30000);
+setInterval(fetchAirtime,5000);
 </script>
 </body>
 </html>
