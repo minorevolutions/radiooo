@@ -52,11 +52,21 @@ body{
 
 /* ── DAY THEME ── */
 body.day{
-  --bg:#f5f0e8;
+  --bg:#f5ede0;
   --fg:#2c1a0e;
   --dim:#7a5c3f;
   --line:rgba(90,50,20,0.18);
   --accent:#a0704a;
+  transition: background 8s ease, color 8s ease;
+}
+
+body.day .frame,
+body.day .masthead,
+body.day .player-row,
+body.day .status-row,
+body.day .col,
+body.day .footer-row{
+  transition: background 8s ease, border-color 8s ease;
 }
 
 #theme-toggle{
@@ -615,12 +625,58 @@ if(navigator.geolocation){
   },()=>{wxEl.textContent='location off';});
 }else{wxEl.textContent='';}
 
+// ── AMBIENT PASTEL COLORS (day mode) ──
+const PASTELS=[
+  {bg:'#f5ede0',fg:'#2c1a0e',dim:'#7a5c3f',accent:'#a0704a'}, // warm sand
+  {bg:'#e8f0f5',fg:'#0e1f2c',dim:'#3f6a7a',accent:'#4a8aa0'}, // morning sky
+  {bg:'#f0f5e8',fg:'#1a2c0e',dim:'#5c7a3f',accent:'#70a04a'}, // soft sage
+  {bg:'#f5e8f0',fg:'#2c0e1f',dim:'#7a3f6a',accent:'#a04a8a'}, // dusty rose
+  {bg:'#f5f0e0',fg:'#2c260e',dim:'#7a6a3f',accent:'#a09040'}, // butter
+  {bg:'#e8eef5',fg:'#0e1a2c',dim:'#3f557a',accent:'#4a70a0'}, // lavender mist
+  {bg:'#f5e8e8',fg:'#2c0e0e',dim:'#7a3f3f',accent:'#a04a4a'}, // blush
+  {bg:'#eaf5e8',fg:'#0e2c12',dim:'#3f7a45',accent:'#4aa050'}, // mint
+];
+let pastelIdx=0;
+let pastelTimer=null;
+
+function applyPastel(p){
+  document.body.style.setProperty('--bg',p.bg);
+  document.body.style.setProperty('--fg',p.fg);
+  document.body.style.setProperty('--dim',p.dim);
+  document.body.style.setProperty('--accent',p.accent);
+}
+
+function nextPastel(){
+  pastelIdx=(pastelIdx+1)%PASTELS.length;
+  applyPastel(PASTELS[pastelIdx]);
+}
+
+function startPastels(){
+  applyPastel(PASTELS[pastelIdx]);
+  pastelTimer=setInterval(nextPastel, 9000);
+}
+
+function stopPastels(){
+  clearInterval(pastelTimer);
+  // restore night vars
+  document.body.style.removeProperty('--bg');
+  document.body.style.removeProperty('--fg');
+  document.body.style.removeProperty('--dim');
+  document.body.style.removeProperty('--accent');
+}
+
 // ── DAY / NIGHT TOGGLE ──
 const themeBtn=document.getElementById('theme-toggle');
 const isDay=()=>document.body.classList.contains('day');
 themeBtn.addEventListener('click',()=>{
   document.body.classList.toggle('day');
-  themeBtn.textContent=isDay()?'☾':'☀';
+  if(isDay()){
+    themeBtn.textContent='☾';
+    startPastels();
+  } else {
+    themeBtn.textContent='☀';
+    stopPastels();
+  }
 });
 
 // ── DAYS ──
@@ -682,7 +738,7 @@ document.querySelectorAll('.dj').forEach(dj=>{
 async function fetchAirtime(){
   try{
     // Use live-info (v1) — structure: previous, current, next, currentShow[], nextShow[]
-    const r=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/live-info?limit=20');
+    const r=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/live-info?limit=20');
     const d=await r.json();
 
     // ── NOW PLAYING ──
@@ -740,7 +796,7 @@ async function fetchAirtime(){
 
     // ── LIVE SCHEDULE from week-info ──
     try{
-      const sr=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/week-info');
+      const sr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/week-info');
       const sd=await sr.json();
       const allShows=Object.values(sd).flat().filter(s=>s&&s.name);
       const seen=new Set();
@@ -771,7 +827,7 @@ async function fetchAirtime(){
 
     // item-history-feed is the best source for play history
     try{
-      const hr=await fetch('https://corsproxy.io/?https://folkworld.airtime.pro/api/item-history-feed?limit=20');
+      const hr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/item-history-feed?limit=20');
       const hd=await hr.json();
       const items=Array.isArray(hd)?hd:Object.values(hd);
       items.forEach(t=>{
