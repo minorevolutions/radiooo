@@ -738,7 +738,21 @@ document.querySelectorAll('.dj').forEach(dj=>{
 async function fetchAirtime(){
   try{
     // Use live-info (v1) — structure: previous, current, next, currentShow[], nextShow[]
-    const r=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/live-info?limit=20');
+    // Try direct first, fall back to proxies
+    let r, d;
+    const endpoints=[
+      'https://folkworld.out.airtime.pro/api/live-info?limit=20',
+      'https://corsproxy.io/?https://folkworld.out.airtime.pro/api/live-info?limit=20',
+      'https://api.allorigins.win/raw?url=https%3A%2F%2Ffolkworld.out.airtime.pro%2Fapi%2Flive-info%3Flimit%3D20',
+      'https://thingproxy.freeboard.io/fetch/https://folkworld.out.airtime.pro/api/live-info?limit=20',
+    ];
+    for(const url of endpoints){
+      try{
+        r=await fetch(url);
+        if(r.ok){d=await r.json();break;}
+      }catch{}
+    }
+    if(!d) throw new Error('all endpoints failed');
     const d=await r.json();
 
     // ── NOW PLAYING ──
@@ -796,7 +810,10 @@ async function fetchAirtime(){
 
     // ── LIVE SCHEDULE from week-info ──
     try{
-      const sr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/week-info');
+      let sr;
+      for(const p of['https://folkworld.out.airtime.pro/api/week-info','https://corsproxy.io/?https://folkworld.out.airtime.pro/api/week-info','https://api.allorigins.win/raw?url=https%3A%2F%2Ffolkworld.out.airtime.pro%2Fapi%2Fweek-info']){
+        try{sr=await fetch(p);if(sr.ok)break;}catch{}
+      }
       const sd=await sr.json();
       const allShows=Object.values(sd).flat().filter(s=>s&&s.name);
       const seen=new Set();
@@ -827,7 +844,10 @@ async function fetchAirtime(){
 
     // item-history-feed is the best source for play history
     try{
-      const hr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/item-history-feed?limit=20');
+      let hr;
+      for(const p of['https://folkworld.out.airtime.pro/api/item-history-feed?limit=20','https://corsproxy.io/?https://folkworld.out.airtime.pro/api/item-history-feed?limit=20','https://api.allorigins.win/raw?url=https%3A%2F%2Ffolkworld.out.airtime.pro%2Fapi%2Fitem-history-feed%3Flimit%3D20']){
+        try{hr=await fetch(p);if(hr.ok)break;}catch{}
+      }
       const hd=await hr.json();
       const items=Array.isArray(hd)?hd:Object.values(hd);
       items.forEach(t=>{
