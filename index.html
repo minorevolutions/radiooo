@@ -427,32 +427,6 @@ document.querySelectorAll('.dj').forEach(dj=>{
 });
 
 const API='https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api';
-
-async function fetchWithTimeout(url, ms=8000){
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),ms);
-  try{
-    const r=await fetch(url,{signal:controller.signal});
-    clearTimeout(timer);
-    return r;
-  }catch(e){clearTimeout(timer);throw e;}
-}
-
-async function fetchJSON(url){
-  // try direct first, then proxy
-  const urls=[
-    url.replace(API,'https://folkworld.airtime.pro/api'),
-    url,
-    url.replace('allorigins.win/raw?url=','corsproxy.io/?'),
-  ];
-  for(const u of urls){
-    try{
-      const r=await fetchWithTimeout(u,6000);
-      if(r.ok) return await r.json();
-    }catch{}
-  }
-  throw new Error('all failed');
-}
 function fmtTrack(t){
   const artist=t&&(t.metadata&&t.metadata.artist_name||t.artist_name)||'';
   const title=t&&(t.metadata&&t.metadata.track_title||t.track_title||t.name)||'';
@@ -460,7 +434,8 @@ function fmtTrack(t){
 }
 async function fetchAirtime(){
   try{
-    const d=await fetchJSON(`${API}/live-info?limit=20`);
+    const r=await fetch(API+'/live-info?limit=20');
+    const d=await r.json();
     const currentTrack=d.current;
     const currentShow=Array.isArray(d.currentShow)?d.currentShow[0]:d.currentShow;
     const nextShow=Array.isArray(d.nextShow)?d.nextShow[0]:d.nextShow;
@@ -507,7 +482,8 @@ async function fetchAirtime(){
       }
     }
     try{
-      const sd=await fetchJSON(`${API}/week-info`);
+      const sr=await fetch(API+'/week-info');
+      const sd=await sr.json();
       const seen=new Set();
       const unique=Object.values(sd).flat().filter(s=>s&&s.name).filter(s=>{
         const k=s.name.toLowerCase();return seen.has(k)?false:(seen.add(k),true);
@@ -530,7 +506,8 @@ async function fetchAirtime(){
     const tracks=[];
     if(currentName)tracks.push({name:currentName,current:true});
     try{
-      const hd=await fetchJSON(`${API}/item-history-feed?limit=20`);
+      const hr=await fetch(API+'/item-history-feed?limit=20');
+      const hd=await hr.json();
       const items=Array.isArray(hd)?hd:Object.values(hd);
       items.forEach(t=>{
         const artist=t&&(t.artist_name||t.metadata&&t.metadata.artist_name)||'';
