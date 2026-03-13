@@ -9,9 +9,9 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
-  --bg:#171612;
-  --fg:#c8c4b8;
-  --dim:#6b6860;
+  --bg:#000000;
+  --fg:#ffffff;
+  --dim:#9ca3af;
   --line:rgba(200,196,184,0.18);
   --accent:#9ca3af;
   --red:#ff3b3b;
@@ -49,6 +49,28 @@ body{
   padding:0.2rem 0.5rem;
   cursor:default;
 }
+
+/* ── DAY THEME ── */
+body.day{
+  --bg:#f5f0e8;
+  --fg:#2c1a0e;
+  --dim:#7a5c3f;
+  --line:rgba(90,50,20,0.18);
+  --accent:#a0704a;
+}
+
+#theme-toggle{
+  background:none;
+  border:0.5px solid var(--line);
+  color:var(--dim);
+  font-family:var(--f);
+  font-size:0.7rem;
+  padding:0.15rem 0.5rem;
+  cursor:pointer;
+  letter-spacing:0.05em;
+  transition:color 0.2s,border-color 0.2s;
+}
+#theme-toggle:hover{color:var(--fg);border-color:var(--fg);}
 
 /* ── MASTHEAD ── */
 .masthead{
@@ -113,7 +135,7 @@ body{
 .live-lbl{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);}
 
 .wave{display:flex;align-items:center;gap:1.5px;height:14px;}
-.wave b{display:block;width:2px;background:var(--accent);opacity:0.2;animation:wav 0.9s ease-in-out infinite alternate;}
+.wave b{display:block;width:2px;background:#9ca3af;opacity:1;animation:wav 0.9s ease-in-out infinite alternate;}
 .wave.on b{opacity:1;}
 .wave b:nth-child(1){height:3px;animation-delay:0.00s;}
 .wave b:nth-child(2){height:9px;animation-delay:0.08s;}
@@ -375,12 +397,7 @@ audio{display:none;}
       </div>
     </div>
     <div class="mast-fill"></div>
-    <nav class="mast-nav">
-      <a href="#schedule">Schedule</a>
-      <a href="#djs">DJs</a>
-      <a href="#about">About</a>
-      <a href="/cdn-cgi/l/email-protection#29414c454546694f4645425e465b454d5b484d4046074a4644">Contact</a>
-    </nav>
+    <button id="theme-toggle" title="Toggle day/night">☀</button>
   </div>
 
   <!-- PLAYER ROW -->
@@ -487,6 +504,12 @@ audio{display:none;}
       <!-- FEATURED SHOW -->
       <div class="col-head" style="flex-shrink:0;border-top:0.5px solid var(--line);"><span>Featured Show</span></div>
       <div class="feat-block" id="feat-block">
+        <div class="feat-img-wrap" id="feat-img-wrap">
+          <img id="feat-img" src="" alt="" style="display:none;width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:0.6rem;filter:grayscale(20%);">
+          <div id="feat-img-ph" style="width:100%;aspect-ratio:16/9;background:var(--line);margin-bottom:0.6rem;display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.58rem;color:var(--dim);letter-spacing:0.15em;">NO IMAGE</span>
+          </div>
+        </div>
         <div class="feat-name" id="feat-name">The Archive Hour</div>
         <div class="feat-host" id="feat-host">— Delroy Fenton</div>
         <p class="feat-desc" id="feat-desc">Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive.</p>
@@ -517,12 +540,6 @@ audio{display:none;}
         <div class="next-time" id="next-time">—</div>
       </div>
 
-      <div class="contact-block">
-        <a href="/cdn-cgi/l/email-protection#59313c353536193f3635322e362b353d2b383d3036773a3634"><span class="__cf_email__" data-cfemail="58303d343437183e3734332f372a343c2a393c3137763b3735">[email&#160;protected]</span></a>
-        <a href="#">Instagram</a>
-        <a href="#">Mixcloud</a>
-        <a href="#">Newsletter</a>
-      </div>
     </div>
 
   </div><!-- /body -->
@@ -597,6 +614,14 @@ if(navigator.geolocation){
     }catch{wxEl.textContent='unavailable';}
   },()=>{wxEl.textContent='location off';});
 }else{wxEl.textContent='';}
+
+// ── DAY / NIGHT TOGGLE ──
+const themeBtn=document.getElementById('theme-toggle');
+const isDay=()=>document.body.classList.contains('day');
+themeBtn.addEventListener('click',()=>{
+  document.body.classList.toggle('day');
+  themeBtn.textContent=isDay()?'☾':'☀';
+});
 
 // ── DAYS ──
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -673,6 +698,21 @@ async function fetchAirtime(){
     const currentName=fmtTrack(currentTrack);
     if(currentName&&playing) slbl.textContent=currentName;
     else if(currentShow?.name) slbl.textContent=currentShow.name;
+
+    // ── FEATURED SHOW IMAGE from currentShow ──
+    const featImg=document.getElementById('feat-img');
+    const featPh=document.getElementById('feat-img-ph');
+    const imgPath=currentShow?.image_path||currentShow?.image_cloud_file_id;
+    if(imgPath){
+      const imgUrl=imgPath.startsWith('http')?imgPath:`https://folkworld.airtime.pro${imgPath}`;
+      featImg.src=imgUrl;
+      featImg.style.display='block';
+      featPh.style.display='none';
+      featImg.onerror=()=>{featImg.style.display='none';featPh.style.display='flex';};
+    } else {
+      featImg.style.display='none';
+      featPh.style.display='flex';
+    }
 
     // ── ON AIR STATUS ──
     const onairEl=document.getElementById('sr-onair');
