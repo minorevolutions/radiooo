@@ -119,23 +119,20 @@ audio{display:none;}
 @media(max-width:640px){
   html,body{overflow:auto;}
   body{font-size:13px;}
-  .frame{height:auto;min-height:100vh;grid-template-rows:auto auto auto auto auto;margin:3px;}
-  /* player: live pip | ticker | play button only */
-  .player-row{grid-template-columns:auto 1fr auto;}
-  .pr-cell.pr-wave{display:none;}
-  /* bigger masthead */
-  .frame{grid-template-rows:3.5rem 3rem auto auto auto;}
-  .masthead{grid-template-rows:3.5rem;}
+  .frame{height:auto;min-height:100vh;grid-template-rows:3.5rem 3rem auto auto auto;margin:3px;}
+  /* masthead */
   .logo-ph-box{font-size:0.9rem;padding:0.4rem 0.8rem;}
   #site-logo{height:2.2rem!important;}
   #theme-toggle{font-size:1rem;padding:0.3rem 0.8rem;}
-  /* bigger play button */
-  .player-row{grid-template-rows:3rem;}
-  .pbtn{min-width:6rem;font-size:1rem;padding:0 1.2rem;}
-  .pbtn svg{width:13px;height:13px;}
+  /* player: live | ticker | play — hide wave and vol */
+  .player-row{grid-template-columns:auto 1fr auto;height:3rem;}
+  .pr-cell.pr-wave{display:none;}
+  .pr-cell:nth-child(4){display:none;}
+  .pbtn{min-width:5.5rem;font-size:0.95rem;padding:0 1rem;}
+  .pbtn svg{width:12px;height:12px;}
   .live-lbl{font-size:0.75rem;}
   .pip{width:9px;height:9px;}
-  /* hide status row entirely on mobile */
+  /* hide status row */
   .status-row{display:none;}
   /* body stack */
   .body{grid-template-columns:1fr;height:auto;overflow:visible;display:flex;flex-direction:column;}
