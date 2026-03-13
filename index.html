@@ -7,146 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
-  --bg:#000000;
-  --fg:#ffffff;
-  --dim:#9ca3af;
-  --line:rgba(200,196,184,0.18);
-  --accent:#9ca3af;
-  --red:#ff3b3b;
-  --p:0.75rem;
-  --f:'IBM Plex Mono',monospace;
+  --bg:#000000;--fg:#ffffff;--dim:#9ca3af;--line:rgba(200,196,184,0.18);
+  --accent:#9ca3af;--red:#ff3b3b;--p:0.75rem;--f:'IBM Plex Mono',monospace;
 }
-
 html,body{height:100%;overflow:hidden;}
-body{
-  background:var(--bg);
-  color:var(--fg);
-  font-family:var(--f);
-  font-size:11px;
-  line-height:1.55;
-}
-
-/* ── OUTER FRAME ── */
-.frame{
-  display:grid;
-  height:100vh;
-  grid-template-rows: 2.2rem 1.8rem 1.6rem auto 1.6rem;
-  grid-template-columns: 1fr;
-  border:0.5px solid var(--line);
-  margin:6px;
-  height:calc(100vh - 12px);
-}
-
-.logo-placeholder{ display:flex; align-items:center; }
-.logo-ph-box{
-  font-size:0.58rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--dim);
-  border:0.5px dashed var(--dim);
-  padding:0.2rem 0.5rem;
-  cursor:default;
-}
-
-/* ── DAY THEME ── */
-body.day{
-  --bg:#f5ede0;
-  --fg:#2c1a0e;
-  --dim:#7a5c3f;
-  --line:rgba(90,50,20,0.18);
-  --accent:#a0704a;
-  transition: background 8s ease, color 8s ease;
-}
-
-body.day .frame,
-body.day .masthead,
-body.day .player-row,
-body.day .status-row,
-body.day .col,
-body.day .footer-row{
-  transition: background 8s ease, border-color 8s ease;
-}
-
-#theme-toggle{
-  background:none;
-  border:0.5px solid var(--line);
-  color:var(--dim);
-  font-family:var(--f);
-  font-size:0.7rem;
-  padding:0.15rem 0.5rem;
-  cursor:pointer;
-  letter-spacing:0.05em;
-  transition:color 0.2s,border-color 0.2s;
-}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:11px;line-height:1.55;}
+.frame{display:grid;grid-template-rows:2.2rem 1.8rem 1.6rem auto 1.6rem;grid-template-columns:1fr;border:0.5px solid var(--line);margin:6px;height:calc(100vh - 12px);}
+.logo-placeholder{display:flex;align-items:center;}
+.logo-ph-box{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);border:0.5px dashed var(--dim);padding:0.2rem 0.5rem;cursor:default;}
+body.day{--bg:#f5ede0;--fg:#2c1a0e;--dim:#7a5c3f;--line:rgba(90,50,20,0.18);--accent:#a0704a;transition:background 8s ease,color 8s ease;}
+body.day .frame,body.day .masthead,body.day .player-row,body.day .status-row,body.day .col,body.day .footer-row{transition:background 8s ease,border-color 8s ease;}
+#theme-toggle{background:none;border:0.5px solid var(--line);color:var(--dim);font-family:var(--f);font-size:0.7rem;padding:0.15rem 0.6rem;cursor:pointer;letter-spacing:0.05em;transition:color 0.2s,border-color 0.2s;}
 #theme-toggle:hover{color:var(--fg);border-color:var(--fg);}
-
-/* ── MASTHEAD ── */
-.masthead{
-  display:grid;
-  grid-template-columns: auto 1fr auto auto auto;
-  align-items:stretch;
-  border-bottom:0.5px solid var(--line);
-}
-.mast-title{
-  padding:0 var(--p);
-  display:flex;align-items:center;
-  border-right:0.5px solid var(--line);
-  white-space:nowrap;
-}
-.mast-title strong{
-  font-size:1rem;
-  font-weight:600;
-  letter-spacing:0.04em;
-  text-transform:uppercase;
-  color:var(--fg);
-}
-.mast-title em{
-  font-style:italic;
-  font-weight:300;
-  color:var(--accent);
-  margin-left:0.2em;
-}
-.mast-fill{ border-right:0.5px solid var(--line); }
-.mast-nav{
-  display:flex;align-items:stretch;
-}
-.mast-nav a{
-  display:flex;align-items:center;
-  padding:0 0.9rem;
-  font-size:0.65rem;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--dim);
-  text-decoration:none;
-  border-right:0.5px solid var(--line);
-  transition:color 0.15s;
-}
-.mast-nav a:hover{color:var(--fg);}
-
-/* ── PLAYER ROW ── */
-.player-row{
-  display:grid;
-  grid-template-columns: 6rem auto 1fr auto 5rem auto;
-  align-items:stretch;
-  border-bottom:0.5px solid var(--line);
-}
-.pr-cell{
-  display:flex;align-items:center;
-  padding:0 var(--p);
-  border-right:0.5px solid var(--line);
-  gap:0.5rem;
-}
+.masthead{display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:0.5px solid var(--line);}
+.mast-title{padding:0 var(--p);display:flex;align-items:center;border-right:0.5px solid var(--line);white-space:nowrap;}
+.mast-fill{border-right:0.5px solid var(--line);}
+.player-row{display:grid;grid-template-columns:6rem auto 1fr auto auto;align-items:stretch;border-bottom:0.5px solid var(--line);}
+.pr-cell{display:flex;align-items:center;padding:0 var(--p);border-right:0.5px solid var(--line);gap:0.5rem;}
 .pr-cell:last-child{border-right:none;}
-
 .pip{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:blink 1.8s infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.15;}}
 .live-lbl{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);}
-
 .wave{display:flex;align-items:center;gap:1.5px;height:14px;}
 .wave b{display:block;width:2px;background:#9ca3af;opacity:1;animation:wav 0.9s ease-in-out infinite alternate;}
-.wave.on b{opacity:1;}
 .wave b:nth-child(1){height:3px;animation-delay:0.00s;}
 .wave b:nth-child(2){height:9px;animation-delay:0.08s;}
 .wave b:nth-child(3){height:6px;animation-delay:0.16s;}
@@ -154,251 +38,110 @@ body.day .footer-row{
 .wave b:nth-child(5){height:5px;animation-delay:0.24s;}
 .wave b:nth-child(6){height:10px;animation-delay:0.04s;}
 @keyframes wav{from{transform:scaleY(0.3);}to{transform:scaleY(1);}}
-
-.now-playing{font-size:0.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.now-playing em{color:var(--dim);font-style:normal;}
-
+.ticker-wrap{overflow:hidden;flex:1;min-width:0;}
+.ticker{display:inline-block;white-space:nowrap;font-size:0.72rem;padding-right:3rem;}
+.ticker em{color:var(--dim);font-style:normal;}
+.ticker.scrolling{animation:ticker-scroll 18s linear infinite;}
+@keyframes ticker-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .vol-row{display:flex;align-items:center;gap:0.4rem;}
 .vol-row span{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
 input[type=range]{-webkit-appearance:none;width:55px;height:1px;background:var(--dim);outline:none;cursor:pointer;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height:8px;background:var(--accent);cursor:pointer;border-radius:0;}
-
-.pbtn{
-  background:none;border:none;
-  color:var(--fg);width:100%;height:100%;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:background 0.12s,color 0.12s;
-  font-family:var(--f);font-size:0.65rem;letter-spacing:0.1em;
-  text-transform:uppercase;gap:0.4rem;
-  border-left:0.5px solid var(--line);
-}
+#mute-btn{display:none;background:none;border:0.5px solid var(--line);color:var(--dim);font-family:var(--f);font-size:0.72rem;padding:0.2rem 0.6rem;cursor:pointer;}
+.pbtn{background:none;border:none;color:var(--fg);width:100%;height:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.12s,color 0.12s;font-family:var(--f);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;gap:0.4rem;border-left:0.5px solid var(--line);min-width:5rem;}
 .pbtn:hover{background:var(--accent);color:var(--bg);}
 .pbtn svg{width:9px;height:9px;fill:currentColor;flex-shrink:0;}
 audio{display:none;}
-
-/* ── STATUS ROW ── */
-.status-row{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  border-bottom:0.5px solid var(--line);
-}
-.sr-cell{
-  display:flex;align-items:center;gap:0.5rem;
-  padding:0 var(--p);
-  border-right:0.5px solid var(--line);
-  font-size:0.65rem;
-}
+.status-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:0.5px solid var(--line);}
+.sr-cell{display:flex;align-items:center;gap:0.5rem;padding:0 var(--p);border-right:0.5px solid var(--line);font-size:0.65rem;}
 .sr-cell:last-child{border-right:none;}
 .sr-label{color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;}
 .sr-val{color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 #sr-time{color:var(--accent);font-weight:500;}
 #sr-wx{color:var(--accent);}
-
-/* ── MAIN BODY ── */
-.body{
-  display:grid;
-  grid-template-columns: 1.8fr 1.1fr 0.85fr;
-  overflow:hidden;
-  min-height:0;
-}
-
-.col{
-  display:flex;flex-direction:column;
-  border-right:0.5px solid var(--line);
-  min-height:0;overflow:hidden;
-}
+.body{display:grid;grid-template-columns:1.8fr 1.1fr 0.85fr;overflow:hidden;min-height:0;}
+.col{display:flex;flex-direction:column;border-right:0.5px solid var(--line);min-height:0;overflow:hidden;}
 .col:last-child{border-right:none;}
-
-.col-head{
-  font-size:0.58rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--dim);
-  padding:0.5rem var(--p);
-  border-bottom:0.5px solid var(--line);
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-}
-
+.col-head{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);padding:0.5rem var(--p);border-bottom:0.5px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
 .col-scroll{overflow-y:auto;flex:1;min-height:0;}
 .col-scroll::-webkit-scrollbar{width:2px;}
 .col-scroll::-webkit-scrollbar-thumb{background:var(--dim);}
-.col-scroll::-webkit-scrollbar-thumb:hover{background:var(--accent);}
-
-/* ── SCHEDULE ── */
-.si{
-  display:grid;
-  grid-template-columns:4.5rem 1fr auto;
-  gap:0.5rem;
-  padding:0.55rem var(--p);
-  border-bottom:0.5px solid var(--line);
-  cursor:pointer;
-  transition:background 0.1s;
-  align-items:start;
-}
-.si:last-child{border-bottom:none;}
-.si:hover{background:rgba(184,255,60,0.04);}
+.si{display:grid;grid-template-columns:4.5rem 1fr auto;gap:0.5rem;padding:0.55rem var(--p);border-bottom:0.5px solid var(--line);cursor:pointer;transition:background 0.1s;align-items:start;}
+.si:hover{background:rgba(156,163,175,0.06);}
 .si.today .si-time{color:var(--accent);}
-.si.on-air{background:rgba(184,255,60,0.05);}
 .si.on-air .si-name::after{content:' ●';font-size:0.5rem;color:var(--red);animation:blink 1.8s infinite;}
-.si.open{background:rgba(184,255,60,0.06);}
-
+.si.open .si-arrow{color:var(--accent);}
 .si-time{font-size:0.64rem;color:var(--dim);letter-spacing:0.04em;font-weight:500;padding-top:0.05rem;}
-.si-info{}
 .si-name{font-size:0.78rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;line-height:1.3;}
 .si-host{font-size:0.63rem;color:var(--dim);font-style:italic;margin-top:0.1rem;}
 .si-arrow{font-size:0.7rem;color:var(--dim);transition:color 0.12s;align-self:center;}
 .si:hover .si-arrow{color:var(--accent);}
-.si.open .si-arrow{color:var(--accent);transform:rotate(90deg);}
-
-/* detail drawer */
-.si-detail{
-  display:none;
-  padding:0.5rem var(--p) 0.7rem;
-  border-bottom:0.5px solid var(--line);
-  background:rgba(184,255,60,0.03);
-  border-left:1.5px solid var(--accent);
-}
+.si-detail{display:none;padding:0.5rem var(--p) 0.7rem;border-bottom:0.5px solid var(--line);border-left:1.5px solid var(--accent);}
 .si-detail.open{display:block;}
 .si-detail p{font-size:0.68rem;color:var(--dim);font-style:italic;line-height:1.7;margin-bottom:0.4rem;}
 .si-genres{display:flex;flex-wrap:wrap;gap:0.3rem;}
 .gtag{font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;border:0.5px solid var(--accent);color:var(--accent);padding:0.1rem 0.35rem;}
-
-/* ── DJS ── */
-.dj{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0.55rem var(--p);
-  border-bottom:0.5px solid var(--line);
-  cursor:pointer;
-  transition:background 0.1s;
-  gap:0.5rem;
-}
-.dj:last-child{border-bottom:none;}
+.dj{display:flex;align-items:center;justify-content:space-between;padding:0.55rem var(--p);border-bottom:0.5px solid var(--line);cursor:pointer;transition:background 0.1s;gap:0.5rem;}
 .dj:hover{background:rgba(255,255,255,0.02);}
 .dj:hover .dj-arr{opacity:1;}
-.dj-info{}
 .dj-name{font-size:0.76rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;}
 .dj-show{font-size:0.62rem;color:var(--dim);font-style:italic;margin-top:0.08rem;}
 .dj-right{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
 .djtag{font-size:0.53rem;letter-spacing:0.1em;text-transform:uppercase;border:0.5px solid var(--dim);color:var(--dim);padding:0.1rem 0.32rem;}
 .dj-arr{opacity:0;font-size:0.7rem;color:var(--accent);transition:opacity 0.12s;}
-
-/* ── FEATURED SHOW ── */
-.feat-block{
-  padding:var(--p);
-  flex-shrink:0;
-  border-top:none;
-}
-.feat-name{
-  font-size:0.82rem;
-  font-weight:500;
-  text-transform:uppercase;
-  letter-spacing:0.06em;
-  color:var(--accent);
-  line-height:1.3;
-  margin-bottom:0.2rem;
-}
-.feat-host{
-  font-size:0.63rem;
-  color:var(--dim);
-  font-style:italic;
-  margin-bottom:0.55rem;
-}
-.feat-desc{
-  font-size:0.67rem;
-  color:var(--dim);
-  font-style:italic;
-  line-height:1.75;
-  margin-bottom:0.55rem;
-}
-.feat-genres{ display:flex; flex-wrap:wrap; gap:0.3rem; }
-
-/* ── RIGHT COL ── */
+.feat-block{padding:var(--p);flex-shrink:0;}
+.feat-name{font-size:0.82rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);line-height:1.3;margin-bottom:0.2rem;}
+.feat-host{font-size:0.63rem;color:var(--dim);font-style:italic;margin-bottom:0.55rem;}
+.feat-desc{font-size:0.67rem;color:var(--dim);font-style:italic;line-height:1.75;margin-bottom:0.55rem;}
+.feat-genres{display:flex;flex-wrap:wrap;gap:0.3rem;}
 .right-col{display:flex;flex-direction:column;min-height:0;overflow:hidden;}
-
-/* about */
-.about-block{
-  padding:var(--p);
-  border-bottom:0.5px solid var(--line);
-  flex-shrink:0;
-}
+.about-block{padding:var(--p);border-bottom:0.5px solid var(--line);flex-shrink:0;}
 .about-block p{font-size:0.69rem;color:var(--dim);font-style:italic;line-height:1.75;}
 .about-block p+p{margin-top:0.5rem;}
-
-/* recent tracks */
-.tracks-block{
-  flex:1;min-height:0;overflow-y:auto;
-}
+.tracks-block{flex:1;min-height:0;overflow-y:auto;}
 .tracks-block::-webkit-scrollbar{width:2px;}
 .tracks-block::-webkit-scrollbar-thumb{background:var(--dim);}
-
-.track{
-  display:grid;grid-template-columns:1.4rem 1fr;
-  gap:0.4rem;align-items:baseline;
-  padding:0.45rem var(--p);
-  border-bottom:0.5px solid var(--line);
-}
+.track{display:grid;grid-template-columns:1.4rem 1fr;gap:0.4rem;align-items:baseline;padding:0.45rem var(--p);border-bottom:0.5px solid var(--line);}
 .track:last-child{border-bottom:none;}
 .track-n{font-size:0.6rem;color:var(--dim);}
 .track-name{font-size:0.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .track-name.current{color:var(--accent);font-weight:500;}
-.track-name.current::before{content:'▶ ';}
-
-/* next on air */
-.next-block{
-  padding:var(--p);
-  border-top:0.5px solid var(--line);
-  flex-shrink:0;
-  display:none;
-}
+.track-name.current::before{content:'\25B6 ';}
+.next-block{padding:var(--p);border-top:0.5px solid var(--line);flex-shrink:0;display:none;}
 .next-block.show{display:block;}
 .next-label{font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);margin-bottom:0.35rem;}
 .next-name{font-size:0.8rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;color:var(--accent);}
 .next-time{font-size:0.62rem;color:var(--dim);margin-top:0.1rem;}
-
-/* contact */
-.contact-block{
-  padding:var(--p);
-  border-top:0.5px solid var(--line);
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:0.4rem;
-}
-.contact-block a{font-size:0.65rem;color:var(--dim);text-decoration:none;transition:color 0.12s;}
-.contact-block a:hover{color:var(--fg);}
-
-/* ── FOOTER ── */
-.footer-row{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  border-top:0.5px solid var(--line);
-  align-items:center;
-}
-.fr-cell{
-  padding:0 var(--p);
-  font-size:0.58rem;
-  color:var(--dim);
-  letter-spacing:0.08em;
-  height:100%;
-  display:flex;align-items:center;
-  border-right:0.5px solid var(--line);
-}
+.footer-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:0.5px solid var(--line);align-items:center;}
+.fr-cell{padding:0 var(--p);font-size:0.58rem;color:var(--dim);letter-spacing:0.08em;height:100%;display:flex;align-items:center;border-right:0.5px solid var(--line);}
 .fr-cell:last-child{border-right:none;justify-content:flex-end;}
 .fr-cell:nth-child(2){justify-content:center;}
-
 @media(max-width:640px){
-  .body{grid-template-columns:1fr;}
-  .col:not(:first-child){display:none;}
-  .status-row{grid-template-columns:1fr 1fr;}
-  .player-row{grid-template-columns:auto auto 1fr auto;}
+  html,body{overflow:auto;}
+  body{font-size:13px;}
+  .frame{height:auto;min-height:100vh;grid-template-rows:auto auto auto auto auto;margin:3px;}
+  .player-row{grid-template-columns:auto 1fr auto auto;}
   .pr-cell.pr-wave{display:none;}
+  .pbtn{min-width:5rem;font-size:0.85rem;padding:0 1rem;}
+  .vol-row{display:none;}
+  #mute-btn{display:inline-flex!important;align-items:center;justify-content:center;}
+  .status-row{grid-template-columns:1fr 1fr;}
+  .status-row .sr-cell:nth-child(3),.status-row .sr-cell:nth-child(4){border-top:0.5px solid var(--line);}
+  .body{grid-template-columns:1fr;height:auto;overflow:visible;display:flex;flex-direction:column;}
+  .col{height:auto;min-height:0;overflow:visible;border-left:none;border-top:0.5px solid var(--line);order:3;}
+  .col:first-child{border-top:none;}
+  .right-col{order:1;overflow:visible;min-height:0;}
+  .col:nth-child(2){order:2;}
+  .col-scroll{overflow:visible;height:auto;}
+  .tracks-block{overflow:visible;height:auto;}
+  #feat-img,#feat-img-ph{width:100%;aspect-ratio:16/9;max-height:none;}
+  .footer-row{grid-template-columns:1fr;}
+  .footer-row .fr-cell:not(:first-child){border-top:0.5px solid var(--line);border-left:none;}
 }
 </style>
 </head>
 <body>
 <div class="frame">
-
-  <!-- MASTHEAD -->
   <div class="masthead">
     <div class="mast-title">
       <div class="logo-placeholder" title="Replace with your logo image">
@@ -407,10 +150,8 @@ audio{display:none;}
       </div>
     </div>
     <div class="mast-fill"></div>
-    <button id="theme-toggle" title="Toggle day/night">☀</button>
+    <button id="theme-toggle" title="Toggle day/night">&#9728;</button>
   </div>
-
-  <!-- PLAYER ROW -->
   <div class="player-row">
     <div class="pr-cell">
       <div class="pip"></div>
@@ -419,14 +160,17 @@ audio{display:none;}
     <div class="pr-cell pr-wave">
       <div class="wave" id="wave"><b></b><b></b><b></b><b></b><b></b><b></b></div>
     </div>
-    <div class="pr-cell">
-      <div class="now-playing">Folk World Radio &mdash; <em id="slbl">off air</em></div>
+    <div class="pr-cell" style="overflow:hidden;min-width:0;">
+      <div class="ticker-wrap">
+        <span class="ticker" id="ticker">Folk World Radio &mdash; <em>off air</em></span>
+      </div>
     </div>
     <div class="pr-cell">
       <div class="vol-row">
         <span>Vol</span>
         <input type="range" id="vol" min="0" max="1" step="0.05" value="0.8">
       </div>
+      <button id="mute-btn">&#9834;</button>
     </div>
     <button class="pbtn" id="pbtn">
       <svg id="picon" viewBox="0 0 10 12"><polygon points="0,0 10,6 0,12"/></svg>
@@ -434,143 +178,88 @@ audio{display:none;}
     </button>
   </div>
   <audio id="aud" preload="none"></audio>
-
-  <!-- STATUS ROW -->
   <div class="status-row">
     <div class="sr-cell"><span class="sr-label">Time</span><span class="sr-val" id="sr-time">--:--:--</span></div>
     <div class="sr-cell"><span class="sr-label">Date</span><span class="sr-val" id="sr-date">---</span></div>
     <div class="sr-cell"><span class="sr-label">Weather</span><span class="sr-val" id="sr-wx">locating...</span></div>
-    <div class="sr-cell"><span class="sr-label">On Air</span><span class="sr-val" id="sr-onair">—</span></div>
+    <div class="sr-cell"><span class="sr-label">On Air</span><span class="sr-val" id="sr-onair">&#8212;</span></div>
   </div>
-
-  <!-- BODY -->
   <div class="body">
-
-    <!-- SCHEDULE -->
     <div class="col">
-      <div class="col-head">
-        <span>Weekly Schedule</span>
-        <span id="today-label"></span>
-      </div>
+      <div class="col-head"><span>Weekly Schedule</span><span id="today-label"></span></div>
       <div class="col-scroll" id="schedule">
         <ul style="list-style:none;">
-          <li class="si" data-idx="0" data-show="ROOTS &amp; ROUTES" data-host="Amara Osei" data-desc="African folk traditions and the global diaspora — field recordings, griot music, and contemporary roots from across the continent and its scattered worlds." data-genres="Folk,Diaspora,World">
-            <div class="si-time">MON · 9AM</div>
-            <div class="si-info"><div class="si-name">Roots &amp; Routes</div><div class="si-host">Amara Osei</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="0"><div class="si-time">MON · 9AM</div><div class="si-info"><div class="si-name">Roots &amp; Routes</div><div class="si-host">Amara Osei</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-0"><p>African folk traditions and the global diaspora — field recordings, griot music, and contemporary roots from across the continent and its scattered worlds.</p><div class="si-genres"><span class="gtag">Folk</span><span class="gtag">Diaspora</span><span class="gtag">World</span></div></div>
-          <li class="si" data-idx="1" data-show="THE ARCHIVE HOUR" data-host="Delroy Fenton" data-desc="Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive." data-genres="Archival,Interview,Documentary">
-            <div class="si-time">TUE · 11AM</div>
-            <div class="si-info"><div class="si-name">The Archive Hour</div><div class="si-host">Delroy Fenton</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="1"><div class="si-time">TUE · 11AM</div><div class="si-info"><div class="si-name">The Archive Hour</div><div class="si-host">Delroy Fenton</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-1"><p>Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive.</p><div class="si-genres"><span class="gtag">Archival</span><span class="gtag">Interview</span><span class="gtag">Documentary</span></div></div>
-          <li class="si" data-idx="2" data-show="DEEP SOUL" data-host="Sister Cora Mae" data-desc="Southern soul, sacred steel, and gospel in its many forms. The music of Muscle Shoals, Malaco, and every small church where the spirit moved." data-genres="Soul,Gospel,Blues">
-            <div class="si-time">WED · 2PM</div>
-            <div class="si-info"><div class="si-name">Deep Soul</div><div class="si-host">Sister Cora Mae</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="2"><div class="si-time">WED · 2PM</div><div class="si-info"><div class="si-name">Deep Soul</div><div class="si-host">Sister Cora Mae</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-2"><p>Southern soul, sacred steel, and gospel in its many forms. The music of Muscle Shoals, Malaco, and every small church where the spirit moved.</p><div class="si-genres"><span class="gtag">Soul</span><span class="gtag">Gospel</span><span class="gtag">Blues</span></div></div>
-          <li class="si" data-idx="3" data-show="FREQUENCY UNKNOWN" data-host="K. Ibeji" data-desc="The outer reaches — free jazz, electronic experimentation, noise, and the avant-garde. Sun Ra to Matana Roberts. Where Black music refuses every boundary." data-genres="Experimental,Jazz,Electronic">
-            <div class="si-time">THU · 7PM</div>
-            <div class="si-info"><div class="si-name">Frequency Unknown</div><div class="si-host">K. Ibeji</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="3"><div class="si-time">THU · 7PM</div><div class="si-info"><div class="si-name">Frequency Unknown</div><div class="si-host">K. Ibeji</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-3"><p>The outer reaches — free jazz, electronic experimentation, noise, and the avant-garde. Sun Ra to Matana Roberts. Where Black music refuses every boundary.</p><div class="si-genres"><span class="gtag">Experimental</span><span class="gtag">Jazz</span><span class="gtag">Electronic</span></div></div>
-          <li class="si" data-idx="4" data-show="BLOCK TO BLOCK" data-host="DJ Maroon" data-desc="Hip-hop, funk, and the street. From Bronx block parties to trap to drill. The lineage and the now, side by side." data-genres="Hip-Hop,Funk,Rap">
-            <div class="si-time">FRI · 6PM</div>
-            <div class="si-info"><div class="si-name">Block to Block</div><div class="si-host">DJ Maroon</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="4"><div class="si-time">FRI · 6PM</div><div class="si-info"><div class="si-name">Block to Block</div><div class="si-host">DJ Maroon</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-4"><p>Hip-hop, funk, and the street. From Bronx block parties to trap to drill. The lineage and the now, side by side.</p><div class="si-genres"><span class="gtag">Hip-Hop</span><span class="gtag">Funk</span><span class="gtag">Rap</span></div></div>
-          <li class="si" data-idx="5" data-show="SATURDAY JAZZ" data-host="Théo Fontaine" data-desc="Hard bop, afro-jazz, free music, and everything between. Blue Note to ECM. From bebop fundamentals to the contemporary scene." data-genres="Jazz,Bop,Afro-Jazz">
-            <div class="si-time">SAT · 12PM</div>
-            <div class="si-info"><div class="si-name">Saturday Jazz</div><div class="si-host">Théo Fontaine</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="5"><div class="si-time">SAT · 12PM</div><div class="si-info"><div class="si-name">Saturday Jazz</div><div class="si-host">Théo Fontaine</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-5"><p>Hard bop, afro-jazz, free music, and everything between. Blue Note to ECM. From bebop fundamentals to the contemporary scene.</p><div class="si-genres"><span class="gtag">Jazz</span><span class="gtag">Bop</span><span class="gtag">Afro-Jazz</span></div></div>
-          <li class="si" data-idx="6" data-show="SUNDAY MORNING GOSPEL" data-host="Sister Cora Mae" data-desc="Where the week begins and ends. Traditional quartets, contemporary praise, and the long continuum of Black sacred music from jubilee to now." data-genres="Gospel,Sacred,Spiritual">
-            <div class="si-time">SUN · 10AM</div>
-            <div class="si-info"><div class="si-name">Sunday Morning Gospel</div><div class="si-host">Sister Cora Mae</div></div>
-            <div class="si-arrow">›</div>
-          </li>
+          <li class="si" data-idx="6"><div class="si-time">SUN · 10AM</div><div class="si-info"><div class="si-name">Sunday Morning Gospel</div><div class="si-host">Sister Cora Mae</div></div><div class="si-arrow">&#8250;</div></li>
           <div class="si-detail" id="detail-6"><p>Where the week begins and ends. Traditional quartets, contemporary praise, and the long continuum of Black sacred music from jubilee to now.</p><div class="si-genres"><span class="gtag">Gospel</span><span class="gtag">Sacred</span><span class="gtag">Spiritual</span></div></div>
         </ul>
       </div>
     </div>
-
-    <!-- DJS -->
     <div class="col">
       <div class="col-head"><span>Programmers &amp; DJs</span></div>
       <div class="col-scroll">
-        <div class="dj" data-idx="0"><div class="dj-info"><div class="dj-name">Amara Osei</div><div class="dj-show">Roots &amp; Routes · Mon</div></div><div class="dj-right"><span class="djtag">Folk</span><span class="dj-arr">→</span></div></div>
-        <div class="dj" data-idx="1"><div class="dj-info"><div class="dj-name">Delroy Fenton</div><div class="dj-show">The Archive Hour · Tue</div></div><div class="dj-right"><span class="djtag">Archive</span><span class="dj-arr">→</span></div></div>
-        <div class="dj" data-idx="2"><div class="dj-info"><div class="dj-name">Sister Cora Mae</div><div class="dj-show">Deep Soul · Wed &amp; Sun</div></div><div class="dj-right"><span class="djtag">Soul</span><span class="dj-arr">→</span></div></div>
-        <div class="dj" data-idx="3"><div class="dj-info"><div class="dj-name">K. Ibeji</div><div class="dj-show">Frequency Unknown · Thu</div></div><div class="dj-right"><span class="djtag">Experimental</span><span class="dj-arr">→</span></div></div>
-        <div class="dj" data-idx="4"><div class="dj-info"><div class="dj-name">DJ Maroon</div><div class="dj-show">Block to Block · Fri</div></div><div class="dj-right"><span class="djtag">Hip-Hop</span><span class="dj-arr">→</span></div></div>
-        <div class="dj" data-idx="5"><div class="dj-info"><div class="dj-name">Théo Fontaine</div><div class="dj-show">Saturday Jazz · Sat</div></div><div class="dj-right"><span class="djtag">Jazz</span><span class="dj-arr">→</span></div></div>
+        <div class="dj" data-idx="0"><div class="dj-info"><div class="dj-name">Amara Osei</div><div class="dj-show">Roots &amp; Routes · Mon</div></div><div class="dj-right"><span class="djtag">Folk</span><span class="dj-arr">&#8594;</span></div></div>
+        <div class="dj" data-idx="1"><div class="dj-info"><div class="dj-name">Delroy Fenton</div><div class="dj-show">The Archive Hour · Tue</div></div><div class="dj-right"><span class="djtag">Archive</span><span class="dj-arr">&#8594;</span></div></div>
+        <div class="dj" data-idx="2"><div class="dj-info"><div class="dj-name">Sister Cora Mae</div><div class="dj-show">Deep Soul · Wed &amp; Sun</div></div><div class="dj-right"><span class="djtag">Soul</span><span class="dj-arr">&#8594;</span></div></div>
+        <div class="dj" data-idx="3"><div class="dj-info"><div class="dj-name">K. Ibeji</div><div class="dj-show">Frequency Unknown · Thu</div></div><div class="dj-right"><span class="djtag">Experimental</span><span class="dj-arr">&#8594;</span></div></div>
+        <div class="dj" data-idx="4"><div class="dj-info"><div class="dj-name">DJ Maroon</div><div class="dj-show">Block to Block · Fri</div></div><div class="dj-right"><span class="djtag">Hip-Hop</span><span class="dj-arr">&#8594;</span></div></div>
+        <div class="dj" data-idx="5"><div class="dj-info"><div class="dj-name">Théo Fontaine</div><div class="dj-show">Saturday Jazz · Sat</div></div><div class="dj-right"><span class="djtag">Jazz</span><span class="dj-arr">&#8594;</span></div></div>
       </div>
-      <!-- FEATURED SHOW -->
       <div class="col-head" style="flex-shrink:0;border-top:0.5px solid var(--line);"><span>Featured Show</span></div>
       <div class="feat-block" id="feat-block">
-        <div class="feat-img-wrap" id="feat-img-wrap">
+        <div id="feat-img-wrap">
           <img id="feat-img" src="" alt="" style="display:none;width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:0.6rem;filter:grayscale(20%);">
           <div id="feat-img-ph" style="width:100%;aspect-ratio:16/9;background:var(--line);margin-bottom:0.6rem;display:flex;align-items:center;justify-content:center;">
             <span style="font-size:0.58rem;color:var(--dim);letter-spacing:0.15em;">NO IMAGE</span>
           </div>
         </div>
         <div class="feat-name" id="feat-name">The Archive Hour</div>
-        <div class="feat-host" id="feat-host">— Delroy Fenton</div>
+        <div class="feat-host" id="feat-host">&#8212; Delroy Fenton</div>
         <p class="feat-desc" id="feat-desc">Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive.</p>
-        <div class="feat-genres">
-          <span class="gtag" id="feat-tag-1">Archival</span>
-          <span class="gtag" id="feat-tag-2">Interview</span>
-          <span class="gtag" id="feat-tag-3">Documentary</span>
-        </div>
+        <div class="feat-genres"><span class="gtag">Archival</span><span class="gtag">Interview</span><span class="gtag">Documentary</span></div>
       </div>
     </div>
-
-    <!-- RIGHT: ABOUT + TRACKS + CONTACT -->
     <div class="col right-col">
       <div class="col-head"><span>About</span></div>
       <div class="about-block">
         <p>Folk World is an online radio platform dedicated to Black music across all genres, eras, and worlds — from archival field recordings and rare interviews to live DJ sets and contemporary sound.</p>
         <p>We broadcast the full breadth of the tradition: blues, jazz, gospel, soul, funk, hip-hop, afrobeat, folk, and everything in between. A living archive, always on.</p>
       </div>
-
       <div class="col-head" style="flex-shrink:0;"><span>Recently Played</span></div>
       <div class="tracks-block" id="tracks">
-        <div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">loading...</span></div>
+        <div class="track"><span class="track-n">&#8212;</span><span class="track-name" style="color:var(--dim);font-style:italic;">loading...</span></div>
       </div>
-
       <div class="next-block" id="next-block">
         <div class="next-label">Next on air</div>
-        <div class="next-name" id="next-name">—</div>
-        <div class="next-time" id="next-time">—</div>
+        <div class="next-name" id="next-name">&#8212;</div>
+        <div class="next-time" id="next-time">&#8212;</div>
       </div>
-
     </div>
-
-  </div><!-- /body -->
-
-  <!-- FOOTER -->
-  <div class="footer-row">
-    <div class="fr-cell">© 2026 Folk World Radio</div>
-    <div class="fr-cell">Black music across all genres &amp; eras</div>
-    <div class="fr-cell">Always on — streaming live</div>
   </div>
+  <div class="footer-row">
+    <div class="fr-cell">&#169; 2026 Folk World Radio</div>
+    <div class="fr-cell">Black music across all genres &amp; eras</div>
+    <div class="fr-cell">Always on &#8212; streaming live</div>
+  </div>
+</div>
 
-</div><!-- /frame -->
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── PLAYER ──
+<script>
 const aud=document.getElementById('aud');
 const pbtn=document.getElementById('pbtn');
 const picon=document.getElementById('picon');
 const ptxt=document.getElementById('ptxt');
 const wave=document.getElementById('wave');
-const slbl=document.getElementById('slbl');
 const vol=document.getElementById('vol');
 let playing=false;
 
@@ -583,276 +272,237 @@ pbtn.addEventListener('click',function(e){
     picon.innerHTML='<rect x="0" y="0" width="3" height="12" fill="currentColor"/><rect x="7" y="0" width="3" height="12" fill="currentColor"/>';
     ptxt.textContent='Stop';
     wave.classList.add('on');
-    slbl.textContent='broadcasting live';
     playing=true;
   } else {
     aud.pause();aud.src='';aud.load();
     picon.innerHTML='<polygon points="0,0 10,6 0,12" fill="currentColor"/>';
     ptxt.textContent='Play';
     wave.classList.remove('on');
-    slbl.textContent='off air';
+    updateTicker('Folk World Radio &mdash; <em>off air</em>');
     playing=false;
   }
 });
 vol.addEventListener('input',()=>{if(playing)aud.volume=parseFloat(vol.value);});
 
-// ── CLOCK ──
+const muteBtn=document.getElementById('mute-btn');
+let muted=false;
+muteBtn.addEventListener('click',()=>{
+  muted=!muted;aud.muted=muted;
+  muteBtn.textContent=muted?'✕':'♪';
+  muteBtn.style.color=muted?'var(--red)':'var(--dim)';
+});
+
+function updateTicker(html){
+  const ticker=document.getElementById('ticker');
+  const wrap=ticker.parentElement;
+  ticker.classList.remove('scrolling');
+  ticker.innerHTML=html;
+  requestAnimationFrame(()=>{
+    if(ticker.scrollWidth>wrap.clientWidth+10){
+      ticker.innerHTML=html+'&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;'+html;
+      ticker.classList.add('scrolling');
+    }
+  });
+}
+
+function updateMediaSession(title,artist){
+  if('mediaSession' in navigator){
+    navigator.mediaSession.metadata=new MediaMetadata({
+      title:title||'Folk World Radio',artist:artist||'Folk World',album:'Live Stream',
+      artwork:[{src:'https://folkworld.airtime.pro/api/station-logo?9664f7258f85bf25a783c508fc1be8ce.jpg',sizes:'512x512',type:'image/jpeg'}]
+    });
+    navigator.mediaSession.setActionHandler('play',()=>{if(!playing)pbtn.click();});
+    navigator.mediaSession.setActionHandler('pause',()=>{if(playing)pbtn.click();});
+  }
+}
+
 function tick(){
   const n=new Date(),pad=v=>String(v).padStart(2,'0');
-  document.getElementById('sr-time').textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
-  const D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('sr-date').textContent=`${D[n.getDay()]} ${pad(n.getDate())} ${M[n.getMonth()]} ${n.getFullYear()}`;
+  document.getElementById('sr-time').textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+  const D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('sr-date').textContent=D[n.getDay()]+' '+pad(n.getDate())+' '+M[n.getMonth()]+' '+n.getFullYear();
 }
 tick();setInterval(tick,1000);
 
-// ── WEATHER ──
 const wxEl=document.getElementById('sr-wx');
 if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(async p=>{
     try{
-      const {latitude:la,longitude:lo}=p.coords;
-      const wr=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current_weather=true`);
-      const wd=await wr.json();
-      const c=wd.current_weather;
-      const desc={0:'Clear',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',71:'Snow',80:'Showers',95:'Thunderstorm'}[c.weathercode]||'—';
+      const{latitude:la,longitude:lo}=p.coords;
+      const wr=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+la+'&longitude='+lo+'&current_weather=true');
+      const wd=await wr.json();const c=wd.current_weather;
+      const desc={0:'Clear',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',71:'Snow',80:'Showers',95:'Thunderstorm'}[c.weathercode]||'';
       const tc=Math.round(c.temperature),tf=Math.round(tc*9/5+32);
-      const gr=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${la}&lon=${lo}&format=json`);
+      const gr=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+la+'&lon='+lo+'&format=json');
       const gd=await gr.json();
       const city=gd.address.city||gd.address.town||gd.address.village||'';
-      wxEl.textContent=`${city?city+' · ':''}${tc}°C / ${tf}°F · ${desc}`;
+      wxEl.textContent=(city?city+' · ':'')+tc+'°C / '+tf+'°F · '+desc;
     }catch{wxEl.textContent='unavailable';}
   },()=>{wxEl.textContent='location off';});
-}else{wxEl.textContent='';}
+}
 
-// ── AMBIENT PASTEL COLORS (day mode) ──
 const PASTELS=[
-  {bg:'#f5ede0',fg:'#2c1a0e',dim:'#7a5c3f',accent:'#a0704a'}, // warm sand
-  {bg:'#e8f0f5',fg:'#0e1f2c',dim:'#3f6a7a',accent:'#4a8aa0'}, // morning sky
-  {bg:'#f0f5e8',fg:'#1a2c0e',dim:'#5c7a3f',accent:'#70a04a'}, // soft sage
-  {bg:'#f5e8f0',fg:'#2c0e1f',dim:'#7a3f6a',accent:'#a04a8a'}, // dusty rose
-  {bg:'#f5f0e0',fg:'#2c260e',dim:'#7a6a3f',accent:'#a09040'}, // butter
-  {bg:'#e8eef5',fg:'#0e1a2c',dim:'#3f557a',accent:'#4a70a0'}, // lavender mist
-  {bg:'#f5e8e8',fg:'#2c0e0e',dim:'#7a3f3f',accent:'#a04a4a'}, // blush
-  {bg:'#eaf5e8',fg:'#0e2c12',dim:'#3f7a45',accent:'#4aa050'}, // mint
+  {bg:'#f5ede0',fg:'#2c1a0e',dim:'#7a5c3f',accent:'#a0704a'},
+  {bg:'#e8f0f5',fg:'#0e1f2c',dim:'#3f6a7a',accent:'#4a8aa0'},
+  {bg:'#f0f5e8',fg:'#1a2c0e',dim:'#5c7a3f',accent:'#70a04a'},
+  {bg:'#f5e8f0',fg:'#2c0e1f',dim:'#7a3f6a',accent:'#a04a8a'},
+  {bg:'#f5f0e0',fg:'#2c260e',dim:'#7a6a3f',accent:'#a09040'},
+  {bg:'#e8eef5',fg:'#0e1a2c',dim:'#3f557a',accent:'#4a70a0'},
+  {bg:'#f5e8e8',fg:'#2c0e0e',dim:'#7a3f3f',accent:'#a04a4a'},
+  {bg:'#eaf5e8',fg:'#0e2c12',dim:'#3f7a45',accent:'#4aa050'},
 ];
-let pastelIdx=0;
-let pastelTimer=null;
-
-function applyPastel(p){
-  document.body.style.setProperty('--bg',p.bg);
-  document.body.style.setProperty('--fg',p.fg);
-  document.body.style.setProperty('--dim',p.dim);
-  document.body.style.setProperty('--accent',p.accent);
-}
-
-function nextPastel(){
-  pastelIdx=(pastelIdx+1)%PASTELS.length;
-  applyPastel(PASTELS[pastelIdx]);
-}
-
-function startPastels(){
-  applyPastel(PASTELS[pastelIdx]);
-  pastelTimer=setInterval(nextPastel, 9000);
-}
-
-function stopPastels(){
-  clearInterval(pastelTimer);
-  // restore night vars
-  document.body.style.removeProperty('--bg');
-  document.body.style.removeProperty('--fg');
-  document.body.style.removeProperty('--dim');
-  document.body.style.removeProperty('--accent');
-}
-
-// ── DAY / NIGHT TOGGLE ──
+let pastelIdx=0,pastelTimer=null;
+function applyPastel(p){['bg','fg','dim','accent'].forEach(k=>document.body.style.setProperty('--'+k,p[k]));}
+function startPastels(){applyPastel(PASTELS[pastelIdx]);pastelTimer=setInterval(()=>{pastelIdx=(pastelIdx+1)%PASTELS.length;applyPastel(PASTELS[pastelIdx]);},9000);}
+function stopPastels(){clearInterval(pastelTimer);['bg','fg','dim','accent'].forEach(k=>document.body.style.removeProperty('--'+k));}
 const themeBtn=document.getElementById('theme-toggle');
-const isDay=()=>document.body.classList.contains('day');
 themeBtn.addEventListener('click',()=>{
   document.body.classList.toggle('day');
-  if(isDay()){
-    themeBtn.textContent='☾';
-    startPastels();
-  } else {
-    themeBtn.textContent='☀';
-    stopPastels();
-  }
+  if(document.body.classList.contains('day')){themeBtn.textContent='☾';startPastels();}
+  else{themeBtn.textContent='☀';stopPastels();}
 });
 
-// ── DAYS ──
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const DAYS_SHORT=['SUN','MON','TUE','WED','THU','FRI','SAT'];
-
-// fallback local schedule (used for today-highlight when API is slow)
 const SCHED=[
-  {day:1,start:9*60,  end:11*60, idx:0, name:'Roots & Routes'},
-  {day:2,start:11*60, end:14*60, idx:1, name:'The Archive Hour'},
-  {day:3,start:14*60, end:19*60, idx:2, name:'Deep Soul'},
-  {day:4,start:19*60, end:22*60, idx:3, name:'Frequency Unknown'},
-  {day:5,start:18*60, end:21*60, idx:4, name:'Block to Block'},
-  {day:6,start:12*60, end:15*60, idx:5, name:'Saturday Jazz'},
-  {day:0,start:10*60, end:13*60, idx:6, name:'Sunday Morning Gospel'},
+  {day:1,start:540,end:660,idx:0},{day:2,start:660,end:840,idx:1},
+  {day:3,start:840,end:1140,idx:2},{day:4,start:1140,end:1320,idx:3},
+  {day:5,start:1080,end:1260,idx:4},{day:6,start:720,end:900,idx:5},
+  {day:0,start:600,end:780,idx:6},
 ];
-
 function highlightToday(){
   const now=new Date(),day=now.getDay(),mins=now.getHours()*60+now.getMinutes();
   document.querySelectorAll('.si').forEach(el=>{
     el.classList.remove('today','on-air');
     const s=SCHED.find(x=>x.idx===parseInt(el.dataset.idx));
-    if(s&&s.day===day) el.classList.add('today');
-    if(s&&s.day===day&&mins>=s.start&&mins<s.end) el.classList.add('on-air');
+    if(s&&s.day===day)el.classList.add('today');
+    if(s&&s.day===day&&mins>=s.start&&mins<s.end)el.classList.add('on-air');
   });
-  document.getElementById('today-label').textContent=`Today: ${DAYS[day]}`;
+  document.getElementById('today-label').textContent='Today: '+DAYS[now.getDay()];
 }
 highlightToday();
 
-// ── SCHEDULE EXPAND ──
 document.querySelectorAll('.si').forEach(el=>{
   el.addEventListener('click',()=>{
-    const idx=el.dataset.idx;
-    const detail=document.getElementById(`detail-${idx}`);
+    const idx=el.dataset.idx,detail=document.getElementById('detail-'+idx);
     const isOpen=el.classList.contains('open');
     document.querySelectorAll('.si').forEach(i=>i.classList.remove('open'));
     document.querySelectorAll('.si-detail').forEach(d=>d.classList.remove('open'));
     if(!isOpen){el.classList.add('open');detail&&detail.classList.add('open');}
   });
 });
-
-// ── DJ CLICK → schedule ──
 document.querySelectorAll('.dj').forEach(dj=>{
   dj.addEventListener('click',()=>{
-    const idx=dj.dataset.idx;
-    const si=document.querySelector(`.si[data-idx="${idx}"]`);
+    const idx=dj.dataset.idx,si=document.querySelector('.si[data-idx="'+idx+'"]');
     if(si){
       document.querySelectorAll('.si').forEach(i=>i.classList.remove('open'));
       document.querySelectorAll('.si-detail').forEach(d=>d.classList.remove('open'));
       si.classList.add('open');
-      const detail=document.getElementById(`detail-${idx}`);
-      if(detail) detail.classList.add('open');
+      const detail=document.getElementById('detail-'+idx);
+      if(detail)detail.classList.add('open');
       si.scrollIntoView({behavior:'smooth',block:'nearest'});
     }
   });
 });
 
-// ── AIRTIME LIVE API ──
+const API='https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api';
+function fmtTrack(t){
+  const artist=t&&(t.metadata&&t.metadata.artist_name||t.artist_name)||'';
+  const title=t&&(t.metadata&&t.metadata.track_title||t.track_title||t.name)||'';
+  return artist&&title?artist+' — '+title:title||artist||'';
+}
 async function fetchAirtime(){
   try{
-    // Use live-info (v1) — structure: previous, current, next, currentShow[], nextShow[]
-    const r=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/live-info?limit=20');
+    const r=await fetch(API+'/live-info?limit=20');
     const d=await r.json();
-
-    // ── NOW PLAYING ──
     const currentTrack=d.current;
     const currentShow=Array.isArray(d.currentShow)?d.currentShow[0]:d.currentShow;
     const nextShow=Array.isArray(d.nextShow)?d.nextShow[0]:d.nextShow;
-
-    const fmtTrack=t=>{
-      const artist=t?.metadata?.artist_name||t?.artist_name||'';
-      const title=t?.metadata?.track_title||t?.track_title||t?.name||'';
-      return artist&&title?`${artist} — ${title}`:title||artist||t?.name||'';
-    };
     const currentName=fmtTrack(currentTrack);
-    if(currentName&&playing) slbl.textContent=currentName;
-    else if(currentShow?.name) slbl.textContent=currentShow.name;
-
-    // ── FEATURED SHOW IMAGE from currentShow ──
+    const tickHtml=currentName
+      ?'Folk World Radio &mdash; <em>'+currentName+'</em>'
+      :currentShow&&currentShow.name
+        ?'Folk World Radio &mdash; <em>'+currentShow.name+'</em>'
+        :'Folk World Radio &mdash; <em>off air</em>';
+    updateTicker(tickHtml);
+    if(currentName&&playing){
+      const parts=currentName.split(' — ');
+      updateMediaSession(parts[1]||currentName,parts[0]||'Folk World');
+    } else if(currentShow&&currentShow.name){
+      updateMediaSession(currentShow.name,'Folk World');
+    }
     const featImg=document.getElementById('feat-img');
     const featPh=document.getElementById('feat-img-ph');
-    const imgPath=currentShow?.image_path||currentShow?.image_cloud_file_id;
+    const imgPath=currentShow&&(currentShow.image_path||currentShow.image_cloud_file_id);
     if(imgPath){
-      const imgUrl=imgPath.startsWith('http')?imgPath:`https://folkworld.airtime.pro${imgPath}`;
-      featImg.src=imgUrl;
-      featImg.style.display='block';
-      featPh.style.display='none';
+      const imgUrl=imgPath.startsWith('http')?imgPath:'https://folkworld.airtime.pro'+imgPath;
+      featImg.src=imgUrl;featImg.style.display='block';featPh.style.display='none';
       featImg.onerror=()=>{featImg.style.display='none';featPh.style.display='flex';};
-    } else {
-      featImg.style.display='none';
-      featPh.style.display='flex';
-    }
-
-    // ── ON AIR STATUS ──
+    } else {featImg.style.display='none';featPh.style.display='flex';}
     const onairEl=document.getElementById('sr-onair');
     const nextBlock=document.getElementById('next-block');
-    if(currentShow?.name){
-      onairEl.textContent=currentShow.name;
-      nextBlock.classList.remove('show');
+    if(currentShow&&currentShow.name){
+      onairEl.textContent=currentShow.name;nextBlock.classList.remove('show');
       document.querySelectorAll('.si').forEach(el=>el.classList.remove('on-air'));
       document.querySelectorAll('.si').forEach(el=>{
-        if(el.querySelector('.si-name')?.textContent.toLowerCase().includes(
-          currentShow.name.toLowerCase().slice(0,8))) el.classList.add('on-air');
+        const nm=el.querySelector('.si-name');
+        if(nm&&nm.textContent.toLowerCase().includes(currentShow.name.toLowerCase().slice(0,8)))el.classList.add('on-air');
       });
     } else {
       onairEl.textContent='Off air';
-      if(nextShow?.name){
+      if(nextShow&&nextShow.name){
         document.getElementById('next-name').textContent=nextShow.name.toUpperCase();
         if(nextShow.starts){
           const ns=new Date(nextShow.starts);
           const h=ns.getHours(),ampm=h>=12?'PM':'AM',h12=h>12?h-12:(h===0?12:h);
-          document.getElementById('next-time').textContent=`${DAYS[ns.getDay()]} · ${h12}${ampm}`;
+          document.getElementById('next-time').textContent=DAYS[ns.getDay()]+' · '+h12+ampm;
         }
         nextBlock.classList.add('show');
       }
     }
-
-    // ── LIVE SCHEDULE from week-info ──
     try{
-      const sr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/week-info');
+      const sr=await fetch(API+'/week-info');
       const sd=await sr.json();
-      const allShows=Object.values(sd).flat().filter(s=>s&&s.name);
       const seen=new Set();
-      const unique=allShows.filter(s=>{
-        const key=s.name.toLowerCase();
-        if(seen.has(key)) return false;
-        seen.add(key); return true;
+      const unique=Object.values(sd).flat().filter(s=>s&&s.name).filter(s=>{
+        const k=s.name.toLowerCase();return seen.has(k)?false:(seen.add(k),true);
       }).slice(0,7);
       unique.forEach((show,i)=>{
-        const nameEl=document.querySelector(`.si[data-idx="${i}"] .si-name`);
-        const hostEl=document.querySelector(`.si[data-idx="${i}"] .si-host`);
-        const timeEl=document.querySelector(`.si[data-idx="${i}"] .si-time`);
-        const detailP=document.querySelector(`#detail-${i} p`);
-        if(nameEl) nameEl.textContent=show.name.toUpperCase();
-        if(hostEl&&show.dj) hostEl.textContent=show.dj;
+        const nameEl=document.querySelector('.si[data-idx="'+i+'"] .si-name');
+        const hostEl=document.querySelector('.si[data-idx="'+i+'"] .si-host');
+        const timeEl=document.querySelector('.si[data-idx="'+i+'"] .si-time');
+        const detailP=document.querySelector('#detail-'+i+' p');
+        if(nameEl)nameEl.textContent=show.name.toUpperCase();
+        if(hostEl&&show.dj)hostEl.textContent=show.dj;
         if(timeEl&&show.start_timestamp){
           const sd=new Date(show.start_timestamp*1000);
           const h=sd.getHours(),ampm=h>=12?'PM':'AM',h12=h>12?h-12:(h===0?12:h);
-          timeEl.textContent=`${DAYS_SHORT[sd.getDay()]} · ${h12}${ampm}`;
+          timeEl.textContent=DAYS_SHORT[sd.getDay()]+' · '+h12+ampm;
         }
-        if(detailP&&show.description) detailP.textContent=show.description;
+        if(detailP&&show.description)detailP.textContent=show.description;
       });
     }catch{}
-
-    // ── 20 RECENT TRACKS ──
     const tracks=[];
-    if(currentName) tracks.push({name:currentName,current:true});
-
-    // item-history-feed is the best source for play history
+    if(currentName)tracks.push({name:currentName,current:true});
     try{
-      const hr=await fetch('https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api/item-history-feed?limit=20');
+      const hr=await fetch(API+'/item-history-feed?limit=20');
       const hd=await hr.json();
       const items=Array.isArray(hd)?hd:Object.values(hd);
       items.forEach(t=>{
-        const artist=t?.artist_name||t?.metadata?.artist_name||'';
-        const title=t?.track_title||t?.metadata?.track_title||t?.name||'';
-        const name=artist&&title?`${artist} — ${title}`:title||artist||t?.name;
-        if(name&&!tracks.find(x=>x.name===name))
-          tracks.push({name,current:false});
+        const artist=t&&(t.artist_name||t.metadata&&t.metadata.artist_name)||'';
+        const title=t&&(t.track_title||t.metadata&&t.metadata.track_title||t.name)||'';
+        const name=artist&&title?artist+' — '+title:title||artist||'';
+        if(name&&!tracks.find(x=>x.name===name))tracks.push({name,current:false});
       });
     }catch{}
-
-    // fallback: at least show previous from live-info
-    if(tracks.length<=1&&d.previous?.name)
-      tracks.push({name:d.previous.name,current:false});
-
+    if(tracks.length<=1&&d.previous&&d.previous.name)tracks.push({name:d.previous.name,current:false});
     const tb=document.getElementById('tracks');
     const display=tracks.slice(0,20);
     if(display.length){
-      tb.innerHTML=display.map((t,i)=>
-        `<div class="track"><span class="track-n">${i+1}</span><span class="track-name${t.current?' current':''}">${t.name}</span></div>`
-      ).join('');
+      tb.innerHTML=display.map((t,i)=>'<div class="track"><span class="track-n">'+(i+1)+'</span><span class="track-name'+(t.current?' current':'')+'">'+t.name+'</span></div>').join('');
     } else {
       tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no tracks logged yet</span></div>';
     }
-
   }catch(e){
     console.warn('Airtime API:',e);
     document.getElementById('tracks').innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">unavailable</span></div>';
