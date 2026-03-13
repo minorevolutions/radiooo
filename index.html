@@ -47,7 +47,7 @@ body.day .frame,body.day .masthead,body.day .player-row,body.day .status-row,bod
 .vol-row span{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
 input[type=range]{-webkit-appearance:none;width:55px;height:1px;background:var(--dim);outline:none;cursor:pointer;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height:8px;background:var(--accent);cursor:pointer;border-radius:0;}
-#mute-btn{display:none;background:none;border:0.5px solid var(--line);color:var(--dim);font-family:var(--f);font-size:0.72rem;padding:0.2rem 0.6rem;cursor:pointer;}
+
 .pbtn{background:none;border:none;color:var(--fg);width:100%;height:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.12s,color 0.12s;font-family:var(--f);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;gap:0.4rem;border-left:0.5px solid var(--line);min-width:5rem;}
 .pbtn:hover{background:var(--accent);color:var(--bg);}
 .pbtn svg{width:9px;height:9px;fill:currentColor;flex-shrink:0;}
@@ -291,13 +291,7 @@ pbtn.addEventListener('click',function(e){
 });
 vol.addEventListener('input',()=>{if(playing)aud.volume=parseFloat(vol.value);});
 
-const muteBtn=document.getElementById('mute-btn');
-let muted=false;
-muteBtn.addEventListener('click',()=>{
-  muted=!muted;aud.muted=muted;
-  muteBtn.textContent=muted?'✕':'♪';
-  muteBtn.style.color=muted?'var(--red)':'var(--dim)';
-});
+
 
 function updateTicker(html){
   const ticker=document.getElementById('ticker');
@@ -359,25 +353,27 @@ const PASTELS=[
   {bg:'#eaf5e8',fg:'#0e2c12',dim:'#3f7a45',accent:'#4aa050'},
 ];
 let pastelIdx=0,pastelTimer=null;
-function applyPastel(p){
+const NIGHT={bg:'#000000',fg:'#ffffff',dim:'#9ca3af',accent:'#9ca3af',line:'rgba(200,196,184,0.18)'};
+function applyTheme(p){
   document.body.style.setProperty('--bg',p.bg);
   document.body.style.setProperty('--fg',p.fg);
   document.body.style.setProperty('--dim',p.dim);
   document.body.style.setProperty('--accent',p.accent);
-  document.body.style.setProperty('--line','rgba(90,50,20,0.18)');
+  document.body.style.setProperty('--line',p.line||'rgba(90,50,20,0.18)');
 }
+function applyPastel(p){applyTheme({...p,line:'rgba(90,50,20,0.18)'});}
 function startPastels(){applyPastel(PASTELS[pastelIdx]);pastelTimer=setInterval(()=>{pastelIdx=(pastelIdx+1)%PASTELS.length;applyPastel(PASTELS[pastelIdx]);},9000);}
-function stopPastels(){
-  clearInterval(pastelTimer);
-  ['bg','fg','dim','accent','line'].forEach(k=>document.body.style.removeProperty('--'+k));
-}
+function stopPastels(){clearInterval(pastelTimer);applyTheme(NIGHT);}
 const themeBtn=document.getElementById('theme-toggle');
+let isDay=false;
 themeBtn.addEventListener('click',()=>{
-  document.body.classList.toggle('day');
-  if(document.body.classList.contains('day')){
+  isDay=!isDay;
+  if(isDay){
+    document.body.classList.add('day');
     themeBtn.textContent='\u263E';
     startPastels();
   } else {
+    document.body.classList.remove('day');
     themeBtn.textContent='\u2600';
     stopPastels();
   }
@@ -427,6 +423,32 @@ document.querySelectorAll('.dj').forEach(dj=>{
 });
 
 const API='https://api.allorigins.win/raw?url=https://folkworld.airtime.pro/api';
+
+async function fetchWithTimeout(url, ms=8000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),ms);
+  try{
+    const r=await fetch(url,{signal:controller.signal});
+    clearTimeout(timer);
+    return r;
+  }catch(e){clearTimeout(timer);throw e;}
+}
+
+async function fetchJSON(url){
+  // try direct first, then proxy
+  const urls=[
+    url.replace(API,'https://folkworld.airtime.pro/api'),
+    url,
+    url.replace('allorigins.win/raw?url=','corsproxy.io/?'),
+  ];
+  for(const u of urls){
+    try{
+      const r=await fetchWithTimeout(u,6000);
+      if(r.ok) return await r.json();
+    }catch{}
+  }
+  throw new Error('all failed');
+}
 function fmtTrack(t){
   const artist=t&&(t.metadata&&t.metadata.artist_name||t.artist_name)||'';
   const title=t&&(t.metadata&&t.metadata.track_title||t.track_title||t.name)||'';
@@ -434,8 +456,7 @@ function fmtTrack(t){
 }
 async function fetchAirtime(){
   try{
-    const r=await fetch(API+'/live-info?limit=20');
-    const d=await r.json();
+    const d=await fetchJSON(`${API}/live-info?limit=20`);
     const currentTrack=d.current;
     const currentShow=Array.isArray(d.currentShow)?d.currentShow[0]:d.currentShow;
     const nextShow=Array.isArray(d.nextShow)?d.nextShow[0]:d.nextShow;
@@ -482,8 +503,7 @@ async function fetchAirtime(){
       }
     }
     try{
-      const sr=await fetch(API+'/week-info');
-      const sd=await sr.json();
+      const sd=await fetchJSON(`${API}/week-info`);
       const seen=new Set();
       const unique=Object.values(sd).flat().filter(s=>s&&s.name).filter(s=>{
         const k=s.name.toLowerCase();return seen.has(k)?false:(seen.add(k),true);
@@ -506,8 +526,7 @@ async function fetchAirtime(){
     const tracks=[];
     if(currentName)tracks.push({name:currentName,current:true});
     try{
-      const hr=await fetch(API+'/item-history-feed?limit=20');
-      const hd=await hr.json();
+      const hd=await fetchJSON(`${API}/item-history-feed?limit=20`);
       const items=Array.isArray(hd)?hd:Object.values(hd);
       items.forEach(t=>{
         const artist=t&&(t.artist_name||t.metadata&&t.metadata.artist_name)||'';
