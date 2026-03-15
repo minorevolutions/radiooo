@@ -502,7 +502,7 @@ async function fetchAirtime(){
         nextBlock.classList.add('show');
       }
     }
-
+    
     try{
       const sd=await fetchJSON(`${API}/week-info`);
       const seen=new Set();
@@ -524,29 +524,19 @@ async function fetchAirtime(){
         if(detailP&&show.description)detailP.textContent=show.description;
       });
     }catch{}
-  // Build history from dedicated feed (most recent first)
-  const histItems=[];
-    try{
-      const hd=await fetchJSON(`${API}/item-history-feed?limit=20`);
-      const items=Array.isArray(hd)?hd:(hd&&typeof hd==='object'?Object.values(hd):[]);
-      items.forEach(t=>{
-        if(!t)return;
-        const artist=((t.artist_name||(t.metadata&&t.metadata.artist_name)||'')).trim();
-        const title=((t.track_title||(t.metadata&&t.metadata.track_title)||t.name||'')).trim();
-        const name=artist&&title?artist+' — '+title:title||artist||'';
-        if(name)histItems.push(name);
-      });
-    }catch{}
-    // Compose: current on top (highlighted), then history below it
     const tracks=[];
     if(currentName)tracks.push({name:currentName,current:true});
-    histItems.forEach(name=>{
-      // only skip if it's literally the same string as current (avoid dup at top)
-      if(tracks.length===0||name!==tracks[0].name)
-        tracks.push({name,current:false});
-    });
-    if(!tracks.length&&d&&d.previous&&d.previous.name)
-      tracks.push({name:d.previous.name,current:false});
+    try{
+      const hd=await fetchJSON(`${API}/item-history-feed?limit=20`);
+      const items=Array.isArray(hd)?hd:Object.values(hd);
+      items.forEach(t=>{
+        const artist=t&&(t.artist_name||t.metadata&&t.metadata.artist_name)||'';
+        const title=t&&(t.track_title||t.metadata&&t.metadata.track_title||t.name)||'';
+        const name=artist&&title?artist+' — '+title:title||artist||'';
+        if(name&&!tracks.find(x=>x.name===name))tracks.push({name,current:false});
+      });
+    }catch{}
+    if(tracks.length<=1&&d.previous&&d.previous.name)tracks.push({name:d.previous.name,current:false});
     const tb=document.getElementById('tracks');
     const display=tracks.slice(0,20);
     if(display.length){
@@ -554,6 +544,11 @@ async function fetchAirtime(){
     } else {
       tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no tracks logged yet</span></div>';
     }
+  }catch(e){
+    console.warn('Airtime API:',e);
+    document.getElementById('tracks').innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">unavailable</span></div>';
+  }
+}
 fetchAirtime();
 setInterval(fetchAirtime,5000);
 </script>
