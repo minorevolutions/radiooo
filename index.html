@@ -551,6 +551,75 @@ async function fetchAirtime(){
 }
 fetchAirtime();
 setInterval(fetchAirtime,5000);
+
+// --- screensaver ---
+(function(){
+  const PALETTES=[
+    {bg:'#2C1A0E',fg:'#C8A97E'},
+    {bg:'#3D2314',fg:'#D4B483'},
+    {bg:'#1A0F08',fg:'#A07850'},
+    {bg:'#4A2E18',fg:'#E8C99A'},
+    {bg:'#2A1A0A',fg:'#B89060'},
+    {bg:'#382010',fg:'#C4A070'},
+    {bg:'#1E1208',fg:'#8B6040'},
+    {bg:'#503020',fg:'#F0D5A0'},
+  ];
+
+  const el=document.createElement('div');
+  el.id='screensaver';
+  el.style.cssText='position:fixed;inset:0;z-index:9999;display:none;cursor:none;align-items:center;justify-content:center;';
+  document.body.appendChild(el);
+
+  const label=document.createElement('div');
+  label.textContent='FOLK.WORLD';
+  label.style.cssText='font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:clamp(3rem,10vw,9rem);letter-spacing:0.04em;color:#C8A97E;transition:color 8s ease;user-select:none;pointer-events:none;';
+  el.appendChild(label);
+
+  let active=false, palIdx=0, cycleTimer=null;
+
+  function applyPalette(idx,instant){
+    const p=PALETTES[idx%PALETTES.length];
+    el.style.transition=instant?'opacity 2s ease':'background 8s ease,opacity 2s ease';
+    label.style.transition=instant?'none':'color 8s ease';
+    el.style.background=p.bg;
+    label.style.color=p.fg;
+  }
+
+  function nextPalette(){
+    palIdx=(palIdx+1)%PALETTES.length;
+    applyPalette(palIdx,false);
+    cycleTimer=setTimeout(nextPalette,9000);
+  }
+
+  function show(){
+    if(active)return;
+    active=true;
+    palIdx=Math.floor(Math.random()*PALETTES.length);
+    applyPalette(palIdx,true);
+    el.style.opacity='0';
+    el.style.display='flex';
+    requestAnimationFrame(()=>{ el.style.opacity='1'; });
+    cycleTimer=setTimeout(nextPalette,9000);
+  }
+
+  function hide(){
+    if(!active)return;
+    active=false;
+    clearTimeout(cycleTimer);
+    el.style.opacity='0';
+    setTimeout(()=>{ el.style.display='none'; },1200);
+  }
+
+  let timer=null;
+  function reset(){clearTimeout(timer);hide();timer=setTimeout(show,5000);}
+
+  ['mousemove','mousedown','keydown','scroll','touchstart','touchmove'].forEach(e=>
+    document.addEventListener(e,reset,{passive:true})
+  );
+  el.addEventListener('click',hide);
+  el.addEventListener('touchstart',hide,{passive:true});
+  reset();
+})();
 </script>
 </body>
 </html>
