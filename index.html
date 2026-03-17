@@ -18,7 +18,14 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:11px;li
 .logo-ph-box{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);border:0.5px dashed var(--dim);padding:0.2rem 0.5rem;cursor:default;}
 body.day{--bg:#f5ede0;--fg:#2c1a0e;--dim:#7a5c3f;--line:rgba(90,50,20,0.18);--accent:#a0704a;transition:background 8s ease,color 8s ease;}
 body.day .frame,body.day .masthead,body.day .player-row,body.day .status-row,body.day .col,body.day .footer-row{transition:background 8s ease,border-color 8s ease;}
-#theme-toggle{background:none;border:0.5px solid var(--line);color:var(--dim);font-family:var(--f);font-size:0.7rem;padding:0.15rem 0.6rem;cursor:pointer;letter-spacing:0.05em;transition:color 0.2s,border-color 0.2s;}
+#theme-toggle{
+  background:none;
+  border:0.5px solid var(--line);color:var(--dim);
+  font-family:var(--f);
+  font-size:0.7rem;padding:0.15rem 0.6rem;
+  cursor:pointer;
+  letter-spacing:0.05em;
+  transition:color 0.2s,border-color 0.2s;}
 #theme-toggle:hover{color:var(--fg);border-color:var(--fg);}
 .masthead{display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:0.5px solid var(--line);}
 .mast-title{padding:0 var(--p);display:flex;align-items:center;border-right:0.5px solid var(--line);white-space:nowrap;}
@@ -195,33 +202,18 @@ audio{display:none;}
     <div class="col">
       <div class="col-head"><span>Weekly Schedule</span><span id="today-label"></span></div>
       <div class="col-scroll" id="schedule">
-        <ul style="list-style:none;">
-          <li class="si" data-idx="0"><div class="si-time">MON · 9AM</div><div class="si-info"><div class="si-name">Roots &amp; Routes</div><div class="si-host">Amara Osei</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-0"><p>African folk traditions and the global diaspora — field recordings, griot music, and contemporary roots from across the continent and its scattered worlds.</p><div class="si-genres"><span class="gtag">Folk</span><span class="gtag">Diaspora</span><span class="gtag">World</span></div></div>
-          <li class="si" data-idx="1"><div class="si-time">TUE · 11AM</div><div class="si-info"><div class="si-name">The Archive Hour</div><div class="si-host">Delroy Fenton</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-1"><p>Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive.</p><div class="si-genres"><span class="gtag">Archival</span><span class="gtag">Interview</span><span class="gtag">Documentary</span></div></div>
-          <li class="si" data-idx="2"><div class="si-time">WED · 2PM</div><div class="si-info"><div class="si-name">Deep Soul</div><div class="si-host">Sister Cora Mae</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-2"><p>Southern soul, sacred steel, and gospel in its many forms. The music of Muscle Shoals, Malaco, and every small church where the spirit moved.</p><div class="si-genres"><span class="gtag">Soul</span><span class="gtag">Gospel</span><span class="gtag">Blues</span></div></div>
-          <li class="si" data-idx="3"><div class="si-time">THU · 7PM</div><div class="si-info"><div class="si-name">Frequency Unknown</div><div class="si-host">K. Ibeji</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-3"><p>The outer reaches — free jazz, electronic experimentation, noise, and the avant-garde. Sun Ra to Matana Roberts. Where Black music refuses every boundary.</p><div class="si-genres"><span class="gtag">Experimental</span><span class="gtag">Jazz</span><span class="gtag">Electronic</span></div></div>
-          <li class="si" data-idx="4"><div class="si-time">FRI · 6PM</div><div class="si-info"><div class="si-name">Block to Block</div><div class="si-host">DJ Maroon</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-4"><p>Hip-hop, funk, and the street. From Bronx block parties to trap to drill. The lineage and the now, side by side.</p><div class="si-genres"><span class="gtag">Hip-Hop</span><span class="gtag">Funk</span><span class="gtag">Rap</span></div></div>
-          <li class="si" data-idx="5"><div class="si-time">SAT · 12PM</div><div class="si-info"><div class="si-name">Saturday Jazz</div><div class="si-host">Théo Fontaine</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-5"><p>Hard bop, afro-jazz, free music, and everything between. Blue Note to ECM. From bebop fundamentals to the contemporary scene.</p><div class="si-genres"><span class="gtag">Jazz</span><span class="gtag">Bop</span><span class="gtag">Afro-Jazz</span></div></div>
-          <li class="si" data-idx="6"><div class="si-time">SUN · 10AM</div><div class="si-info"><div class="si-name">Sunday Morning Gospel</div><div class="si-host">Sister Cora Mae</div></div><div class="si-arrow">&#8250;</div></li>
-          <div class="si-detail" id="detail-6"><p>Where the week begins and ends. Traditional quartets, contemporary praise, and the long continuum of Black sacred music from jubilee to now.</p><div class="si-genres"><span class="gtag">Gospel</span><span class="gtag">Sacred</span><span class="gtag">Spiritual</span></div></div>
-        </ul>
+        <ul id="sched-list" style="list-style:none;padding:0;margin:0;"></ul>
       </div>
     </div>
     <div class="col">
       <div class="col-head"><span>Programmers &amp; DJs</span></div>
       <div class="col-scroll">
-        <div class="dj" data-idx="0"><div class="dj-info"><div class="dj-name">Amara Osei</div><div class="dj-show">Roots &amp; Routes · Mon</div></div><div class="dj-right"><span class="djtag">Folk</span><span class="dj-arr">&#8594;</span></div></div>
-        <div class="dj" data-idx="1"><div class="dj-info"><div class="dj-name">Delroy Fenton</div><div class="dj-show">The Archive Hour · Tue</div></div><div class="dj-right"><span class="djtag">Archive</span><span class="dj-arr">&#8594;</span></div></div>
-        <div class="dj" data-idx="2"><div class="dj-info"><div class="dj-name">Sister Cora Mae</div><div class="dj-show">Deep Soul · Wed &amp; Sun</div></div><div class="dj-right"><span class="djtag">Soul</span><span class="dj-arr">&#8594;</span></div></div>
-        <div class="dj" data-idx="3"><div class="dj-info"><div class="dj-name">K. Ibeji</div><div class="dj-show">Frequency Unknown · Thu</div></div><div class="dj-right"><span class="djtag">Experimental</span><span class="dj-arr">&#8594;</span></div></div>
-        <div class="dj" data-idx="4"><div class="dj-info"><div class="dj-name">DJ Maroon</div><div class="dj-show">Block to Block · Fri</div></div><div class="dj-right"><span class="djtag">Hip-Hop</span><span class="dj-arr">&#8594;</span></div></div>
-        <div class="dj" data-idx="5"><div class="dj-info"><div class="dj-name">Théo Fontaine</div><div class="dj-show">Saturday Jazz · Sat</div></div><div class="dj-right"><span class="djtag">Jazz</span><span class="dj-arr">&#8594;</span></div></div>
+        <div id="dj-list">
+          <!-- ✏️ ADD YOUR DJS HERE -->
+          <div class="dj"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
+        </div>
       </div>
       <div class="col-head" style="flex-shrink:0;border-top:0.5px solid var(--line);"><span>Featured Show</span></div>
       <div class="feat-block" id="feat-block">
@@ -504,45 +496,111 @@ async function fetchAirtime(){
     }
     
     try{
-      const sd=await fetchJSON(`${API}/week-info`);
+      const DAY_KEYS=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+      const DAY_LABELS=['MON','TUE','WED','THU','FRI','SAT','SUN'];
+
+      // Fetch both week-info and shows in parallel
+      const [sd, showsList] = await Promise.all([
+        fetchJSON(`${API}/week-info`),
+        fetchJSON(`${API}/shows`).catch(()=>[])
+      ]);
+
+      // Build a map of show id -> show metadata (description, genre, dj/host)
+      const showMeta={};
+      if(Array.isArray(showsList)){
+        showsList.forEach(s=>{
+          if(s&&s.id) showMeta[s.id]={
+            description: s.description||'',
+            genre: s.genre||'',
+            url: s.url||''
+          };
+        });
+      }
+
+      // Collect all unique named shows (not auto-DJ filler), cap at 15
+      const AUTO_DJ_DESC='Folk World Radio — continuous music across all genres, eras, and worlds. Black music in all its forms, playing through the night and day.';
       const seen=new Set();
-      const unique=Object.values(sd).flat().filter(s=>s&&s.name).filter(s=>{
-        const k=s.name.toLowerCase();return seen.has(k)?false:(seen.add(k),true);
-      }).slice(0,7);
-      unique.forEach((show,i)=>{
-        const nameEl=document.querySelector('.si[data-idx="'+i+'"] .si-name');
-        const hostEl=document.querySelector('.si[data-idx="'+i+'"] .si-host');
-        const timeEl=document.querySelector('.si[data-idx="'+i+'"] .si-time');
-        const detailP=document.querySelector('#detail-'+i+' p');
-        if(nameEl)nameEl.textContent=show.name.toUpperCase();
-        if(hostEl&&show.dj)hostEl.textContent=show.dj;
-        if(timeEl&&show.start_timestamp){
-          const sd=new Date(show.start_timestamp*1000);
-          const h=sd.getHours(),ampm=h>=12?'PM':'AM',h12=h>12?h-12:(h===0?12:h);
-          timeEl.textContent=DAYS_SHORT[sd.getDay()]+' · '+h12+ampm;
-        }
-        if(detailP&&show.description)detailP.textContent=show.description;
+      const allShows=[];
+      DAY_KEYS.forEach((key,di)=>{
+        const dayShows=Array.isArray(sd[key])?sd[key]:[];
+        dayShows.forEach(show=>{
+          if(!show||!show.name)return;
+          const isAutoDJ=show.auto_dj===true;
+          const displayName=isAutoDJ?'Folk World Radio':show.name;
+          const k=displayName.toLowerCase().trim();
+          if(seen.has(k))return;
+          seen.add(k);
+          const meta=showMeta[show.id]||{};
+          const desc=isAutoDJ?AUTO_DJ_DESC:(meta.description||show.description||'');
+          const genre=isAutoDJ?'Continuous':(meta.genre||'');
+          // parse time
+          let timeLabel=DAY_LABELS[di];
+          if(show.start_timestamp){
+            const timePart=show.start_timestamp.split(' ')[1]||'';
+            const h=parseInt(timePart.split(':')[0],10);
+            if(!isNaN(h)){
+              const ampm=h>=12?'PM':'AM';
+              const h12=h===0?12:h>12?h-12:h;
+              timeLabel=DAY_LABELS[di]+' · '+h12+ampm;
+            }
+          }
+          allShows.push({displayName,desc,genre,timeLabel,dj:show.dj||''});
+        });
       });
+      const shows=allShows.slice(0,15);
+
+      // Render schedule list
+      const schedList=document.getElementById('sched-list');
+      if(schedList){
+        schedList.innerHTML=shows.map((s,i)=>{
+          const genreTags=s.genre?s.genre.split(',').map(g=>'<span class="gtag">'+g.trim()+'</span>').join(''):'';
+          return '<li class="si" data-idx="'+i+'">'
+            +'<div class="si-time">'+s.timeLabel+'</div>'
+            +'<div class="si-info"><div class="si-name">'+s.displayName.toUpperCase()+'</div>'
+            +(s.dj?'<div class="si-host">'+s.dj+'</div>':'')
+            +'</div><div class="si-arrow">›</div></li>'
+            +'<div class="si-detail" id="detail-'+i+'">'
+            +(s.desc?'<p>'+s.desc+'</p>':'')
+            +(genreTags?'<div class="si-genres">'+genreTags+'</div>':'')
+            +'</div>';
+        }).join('');
+        // wire expand/collapse
+        schedList.querySelectorAll('.si').forEach(el=>{
+          el.addEventListener('click',()=>{
+            const idx=el.dataset.idx,detail=document.getElementById('detail-'+idx);
+            const isOpen=el.classList.contains('open');
+            schedList.querySelectorAll('.si').forEach(i=>i.classList.remove('open'));
+            schedList.querySelectorAll('.si-detail').forEach(d=>d.classList.remove('open'));
+            if(!isOpen){el.classList.add('open');detail&&detail.classList.add('open');}
+          });
+        });
+      }
+
+      // DJ list is hardcoded in HTML — edit directly in the #dj-list div
     }catch{}
-    const tracks=[];
-    if(currentName)tracks.push({name:currentName,current:true});
+    const tb=document.getElementById('tracks');
     try{
       const hd=await fetchJSON(`${API}/item-history-feed?limit=20`);
-      const items=Array.isArray(hd)?hd:Object.values(hd);
-      items.forEach(t=>{
-        const artist=t&&(t.artist_name||t.metadata&&t.metadata.artist_name)||'';
-        const title=t&&(t.track_title||t.metadata&&t.metadata.track_title||t.name)||'';
-        const name=artist&&title?artist+' — '+title:title||artist||'';
-        if(name&&!tracks.find(x=>x.name===name))tracks.push({name,current:false});
-      });
-    }catch{}
-    if(tracks.length<=1&&d.previous&&d.previous.name)tracks.push({name:d.previous.name,current:false});
-    const tb=document.getElementById('tracks');
-    const display=tracks.slice(0,20);
-    if(display.length){
-      tb.innerHTML=display.map((t,i)=>'<div class="track"><span class="track-n">'+(i+1)+'</span><span class="track-name'+(t.current?' current':'')+'">'+t.name+'</span></div>').join('');
-    } else {
-      tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no tracks logged yet</span></div>';
+      const items=Array.isArray(hd)?hd:[];
+      // sort by starts descending (most recent first)
+      items.sort((a,b)=>new Date(b.starts)-new Date(a.starts));
+      const tracks=items.map(t=>{
+        const artist=(t.artist_name||'').trim();
+        const title=(t.track_title||'').trim();
+        return artist&&title?artist+' — '+title:title||artist||'';
+      }).filter(Boolean);
+      // mark current track if it matches top of history
+      const display=tracks.slice(0,20);
+      if(display.length){
+        tb.innerHTML=display.map((name,i)=>{
+          const isCurrent=i===0&&currentName&&name.toLowerCase()===currentName.toLowerCase();
+          return '<div class="track"><span class="track-n">'+(i+1)+'</span><span class="track-name'+(isCurrent?' current':'')+'">'+name+'</span></div>';
+        }).join('');
+      } else {
+        tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">no tracks logged yet</span></div>';
+      }
+    }catch{
+      tb.innerHTML='<div class="track"><span class="track-n">—</span><span class="track-name" style="color:var(--dim);font-style:italic;">unavailable</span></div>';
     }
   }catch(e){
     console.warn('Airtime API:',e);
