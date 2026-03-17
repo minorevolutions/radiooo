@@ -201,6 +201,10 @@ audio{display:none;}
   <div class="body">
     <div class="col">
       <div class="col-head"><span>Weekly Schedule</span><span id="today-label"></span></div>
+      <div style="display:flex;gap:0;border-bottom:0.5px solid var(--line);flex-shrink:0;">
+        <button id="sched-this" onclick="showWeek('this')" style="flex:1;background:none;border:none;border-right:0.5px solid var(--line);padding:0.3rem 0;font-family:var(--f);font-size:0.6rem;letter-spacing:0.1em;color:var(--fg);cursor:pointer;text-transform:uppercase;">This Week</button>
+        <button id="sched-next" onclick="showWeek('next')" style="flex:1;background:none;border:none;padding:0.3rem 0;font-family:var(--f);font-size:0.6rem;letter-spacing:0.1em;color:var(--dim);cursor:pointer;text-transform:uppercase;">Next Week</button>
+      </div>
       <div class="col-scroll" id="schedule">
         <ul id="sched-list" style="list-style:none;padding:0;margin:0;"></ul>
       </div>
@@ -225,7 +229,7 @@ audio{display:none;}
         </div>
         <div class="feat-name" id="feat-name">Reference Tracks</div>
         <div class="feat-host" id="feat-host">&#8212; The Editors</div>
-        <p class="feat-desc" id="feat-desc">Reference Tracks focuses on a single artist, producer, or sound across an extended set, returning to early recordings and foundational tracks to understand how a an artist or style was first developed.</p>
+        <p class="feat-desc" id="feat-desc">Reference Tracks focuses on a single artist, producer, or sound across an extended set, returning to early recordings and foundational works to trace how that artist or style first took shape.</p>
         <div class="feat-genres"><span class="gtag">Archival</span><span class="gtag">Interview</span><span class="gtag">Documentary</span></div>
       </div>
     </div>
@@ -357,7 +361,11 @@ function applyPastel(p){applyTheme({...p,line:'rgba(90,50,20,0.18)'});}
 function startPastels(){applyPastel(PASTELS[pastelIdx]);pastelTimer=setInterval(()=>{pastelIdx=(pastelIdx+1)%PASTELS.length;applyPastel(PASTELS[pastelIdx]);},9000);}
 function stopPastels(){clearInterval(pastelTimer);applyTheme(NIGHT);}
 const themeBtn=document.getElementById('theme-toggle');
-let isDay=false;
+let isDay=true;
+// start in day/light mode
+document.body.classList.add('day');
+themeBtn.textContent='\u263E';
+startPastels();
 themeBtn.addEventListener('click',()=>{
   isDay=!isDay;
   if(isDay){
@@ -510,41 +518,43 @@ async function fetchAirtime(){
         });
       }
 
-      // Collect all unique named shows (not auto-DJ filler), cap at 15
       const AUTO_DJ_DESC='Folk World Radio — continuous music across all genres, eras, and worlds. Black music in all its forms, playing through the night and day.';
-      const seen=new Set();
-      const allShows=[];
-      DAY_KEYS.forEach((key,di)=>{
-        const dayShows=Array.isArray(sd[key])?sd[key]:[];
-        dayShows.forEach(show=>{
-          if(!show||!show.name)return;
-          const isAutoDJ=show.auto_dj===true;
-          const displayName=isAutoDJ?'Folk World Radio':show.name;
-          const k=displayName.toLowerCase().trim();
-          if(seen.has(k))return;
-          seen.add(k);
-          const meta=showMeta[show.id]||{};
-          const desc=isAutoDJ?AUTO_DJ_DESC:(meta.description||show.description||'');
-          const genre=isAutoDJ?'Continuous':(meta.genre||'');
-          // parse time
-          let timeLabel=DAY_LABELS[di];
-          if(show.start_timestamp){
-            const timePart=show.start_timestamp.split(' ')[1]||'';
-            const h=parseInt(timePart.split(':')[0],10);
-            if(!isNaN(h)){
-              const ampm=h>=12?'PM':'AM';
-              const h12=h===0?12:h>12?h-12:h;
-              timeLabel=DAY_LABELS[di]+' · '+h12+ampm;
-            }
-          }
-          allShows.push({displayName,desc,genre,timeLabel,dj:show.dj||''});
-        });
-      });
-      const shows=allShows.slice(0,15);
+      const NEXT_KEYS=['nextmonday','nexttuesday','nextwednesday','nextthursday','nextfriday','nextsaturday','nextsunday'];
 
-      // Render schedule list
-      const schedList=document.getElementById('sched-list');
-      if(schedList){
+      function parseShows(keys,labels){
+        const seen=new Set();
+        const result=[];
+        keys.forEach((key,di)=>{
+          const dayShows=Array.isArray(sd[key])?sd[key]:[];
+          dayShows.forEach(show=>{
+            if(!show||!show.name)return;
+            const isAutoDJ=show.auto_dj===true;
+            const displayName=isAutoDJ?'Folk World Radio':show.name;
+            const k=displayName.toLowerCase().trim();
+            if(seen.has(k))return;
+            seen.add(k);
+            const meta=showMeta[show.id]||{};
+            const desc=isAutoDJ?AUTO_DJ_DESC:(meta.description||show.description||'');
+            const genre=isAutoDJ?'Continuous':(meta.genre||'');
+            let timeLabel=labels[di];
+            if(show.start_timestamp){
+              const timePart=show.start_timestamp.split(' ')[1]||'';
+              const h=parseInt(timePart.split(':')[0],10);
+              if(!isNaN(h)){
+                const ampm=h>=12?'PM':'AM';
+                const h12=h===0?12:h>12?h-12:h;
+                timeLabel=labels[di]+' · '+h12+ampm;
+              }
+            }
+            result.push({displayName,desc,genre,timeLabel,dj:show.dj||''});
+          });
+        });
+        return result;
+      }
+
+      function renderShows(shows){
+        const schedList=document.getElementById('sched-list');
+        if(!schedList)return;
         schedList.innerHTML=shows.map((s,i)=>{
           const genreTags=s.genre?s.genre.split(',').map(g=>'<span class="gtag">'+g.trim()+'</span>').join(''):'';
           return '<li class="si" data-idx="'+i+'">'
@@ -557,7 +567,6 @@ async function fetchAirtime(){
             +(genreTags?'<div class="si-genres">'+genreTags+'</div>':'')
             +'</div>';
         }).join('');
-        // wire expand/collapse
         schedList.querySelectorAll('.si').forEach(el=>{
           el.addEventListener('click',()=>{
             const idx=el.dataset.idx,detail=document.getElementById('detail-'+idx);
@@ -568,6 +577,24 @@ async function fetchAirtime(){
           });
         });
       }
+
+      const thisWeekShows=parseShows(DAY_KEYS,DAY_LABELS);
+      const nextWeekShows=parseShows(NEXT_KEYS,DAY_LABELS);
+      renderShows(thisWeekShows);
+
+      window.showWeek=function(which){
+        const btnThis=document.getElementById('sched-this');
+        const btnNext=document.getElementById('sched-next');
+        if(which==='this'){
+          renderShows(thisWeekShows);
+          btnThis.style.color='var(--fg)';
+          btnNext.style.color='var(--dim)';
+        } else {
+          renderShows(nextWeekShows);
+          btnNext.style.color='var(--fg)';
+          btnThis.style.color='var(--dim)';
+        }
+      };
 
       // DJ list is hardcoded in HTML — edit directly in the #dj-list div
     }catch{}
