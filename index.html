@@ -218,14 +218,14 @@ audio{display:none;}
       <div class="col-head" style="flex-shrink:0;border-top:0.5px solid var(--line);"><span>Featured Show</span></div>
       <div class="feat-block" id="feat-block">
         <div id="feat-img-wrap">
-          <img id="feat-img" src="" alt="" style="display:none;width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:0.6rem;filter:grayscale(20%);">
-          <div id="feat-img-ph" style="width:100%;aspect-ratio:16/9;background:var(--line);margin-bottom:0.6rem;display:flex;align-items:center;justify-content:center;">
+          <img id="feat-img" src="reftrack_16x9.png" alt="" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:0.6rem;filter:grayscale(20%);">
+          <div id="feat-img-ph" style="width:100%;aspect-ratio:16/9;background:var(--line);margin-bottom:0.6rem;display:none;align-items:center;justify-content:center;">
             <span style="font-size:0.58rem;color:var(--dim);letter-spacing:0.15em;">NO IMAGE</span>
           </div>
         </div>
-        <div class="feat-name" id="feat-name">The Archive Hour</div>
-        <div class="feat-host" id="feat-host">&#8212; Delroy Fenton</div>
-        <p class="feat-desc" id="feat-desc">Rare radio broadcasts and interviews from the 1940s through the 1990s. James Brown in 1968. Nina Simone off-air. Documents that almost didn't survive.</p>
+        <div class="feat-name" id="feat-name">Reference Tracks</div>
+        <div class="feat-host" id="feat-host">&#8212; The Editors</div>
+        <p class="feat-desc" id="feat-desc">Reference Tracks focuses on a single artist, producer, or sound across an extended set, returning to early recordings and foundational tracks to understand how a an artist or style was first developed.</p>
         <div class="feat-genres"><span class="gtag">Archival</span><span class="gtag">Interview</span><span class="gtag">Documentary</span></div>
       </div>
     </div>
@@ -465,14 +465,7 @@ async function fetchAirtime(){
     } else if(currentShow&&currentShow.name){
       updateMediaSession(currentShow.name,'Folk World');
     }
-    const featImg=document.getElementById('feat-img');
-    const featPh=document.getElementById('feat-img-ph');
-    const imgPath=currentShow&&(currentShow.image_path||currentShow.image_cloud_file_id);
-    if(imgPath){
-      const imgUrl=imgPath.startsWith('http')?imgPath:'https://folkworld.airtime.pro'+imgPath;
-      featImg.src=imgUrl;featImg.style.display='block';featPh.style.display='none';
-      featImg.onerror=()=>{featImg.style.display='none';featPh.style.display='flex';};
-    } else {featImg.style.display='none';featPh.style.display='flex';}
+    // Featured show image is set statically in HTML — not overridden by API
     const onairEl=document.getElementById('sr-onair');
     const nextBlock=document.getElementById('next-block');
     if(currentShow&&currentShow.name){
