@@ -60,10 +60,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height
 .pbtn svg{width:9px;height:9px;fill:currentColor;flex-shrink:0;}
 audio{display:none;}
 .status-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:0.5px solid var(--line);}
-.sr-cell{display:flex;align-items:center;gap:0.5rem;padding:0 var(--p);border-right:0.5px solid var(--line);font-size:0.65rem;}
+.sr-cell{display:flex;align-items:center;gap:0.5rem;padding:0 var(--p); text-transform:uppercase; 0.5px solid var(--line);font-size:0.65rem;}
 .sr-cell:last-child{border-right:none;}
-.sr-label{color:var(--fg);letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;}
-.sr-val{color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sr-label{color:var(--fg);letter-spacing:0.1em; text-transform:uppercase;flex-shrink:0;}
+.sr-val{color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;}
 #sr-time{color:var(--fg);font-weight:500;}
 #sr-wx{color:var(--fg);}
 .body{display:grid;grid-template-columns:1.8fr 1.1fr 0.85fr;overflow:hidden;min-height:0;}
@@ -247,8 +247,6 @@ audio{display:none;}
     <div class="col right-col">
       <div class="col-head"><span>About</span></div>
       <div class="about-block">
-        <p>Folk World is an online radio platform dedicated to Black music across all genres, eras, and worlds — from archival field recordings and rare interviews to live DJ sets and contemporary sound.</p>
-        <p>We broadcast the full breadth of the tradition: blues, jazz, gospel, soul, funk, hip-hop, afrobeat, folk, and everything in between. A living archive, always on.</p>
       </div>
       <div class="col-head" style="flex-shrink:0;"><span>Recently Played</span></div>
       <div class="tracks-block" id="tracks">
