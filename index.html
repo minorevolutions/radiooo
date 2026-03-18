@@ -60,7 +60,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height
 .pbtn svg{width:9px;height:9px;fill:currentColor;flex-shrink:0;}
 audio{display:none;}
 .status-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:0.5px solid var(--line);}
-.sr-cell{display:flex;align-items:center;gap:0.5rem;padding:0 var(--p); text-transform:uppercase; 0.5px solid var(--line);font-size:0.65rem;}
+.sr-cell{display:flex;align-items:center;gap:0.5rem;padding:0 var(--p);text-transform:uppercase;border-right:0.5px solid var(--line);font-size:0.65rem;}
 .sr-cell:last-child{border-right:none;}
 .sr-label{color:var(--fg);letter-spacing:0.1em; text-transform:uppercase;flex-shrink:0;}
 .sr-val{color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:uppercase;}
@@ -227,27 +227,16 @@ audio{display:none;}
       <div class="col-head"><span>Programmers &amp; DJs</span></div>
       <div class="col-scroll">
         <div id="dj-list">
-          <!-- ✏️ EDIT DJS HERE -->
+          <!-- ✏️ EDIT YOUR DJS HERE -->
           <!-- Each .dj needs: data-bio="bio" data-show="SHOW NAME" -->
-          <!-- EARTHACLIT -->
-          <div class="dj" data-bio="bio" data-show="Reference Tracks · Daily"><div class="dj-info"><div class="dj-name">EARTHACLIT</div>
-          <div class="dj-show">Reference Tracks · Daily</div></div><div class="dj-right"><span class="djtag">Archival</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj-detail"><div class="dj-detail-name">EARTHACLIT</div>
-          <div class="dj-detail-bio">bio</div>
-          <div class="dj-detail-show">Reference Tracks · Mon</div></div>
-          <!-- DJ -->
-          <div class="dj" data-bio="The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive." data-show="Further Reading · Tue & Thu"><div class="dj-info"><div class="dj-name">FURTHER READING</div>
-          <div class="dj-show">Further Reading · Tue & Thu</div></div>
-          <div class="dj-right"><span class="djtag">Editorial</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj-detail"><div class="dj-detail-name">FURTHER READING</div>
-          <div class="dj-detail-bio">The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive.</div><div class="dj-detail-show">Further Reading · Tue & Thu</div></div>
-          <!-- DJ -->
+          <div class="dj" data-bio="Earthaclit moves through sound like an archivist with a vendetta. Her sets pull from forgotten pressings, radio broadcasts, and live recordings that were never meant to survive. She finds the fracture lines in the tradition and follows them forward." data-show="Reference Tracks · Mon"><div class="dj-info"><div class="dj-name">EARTHACLIT</div><div class="dj-show">Reference Tracks · Mon</div></div><div class="dj-right"><span class="djtag">Archival</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">EARTHACLIT</div><div class="dj-detail-bio">Earthaclit moves through sound like an archivist with a vendetta. Her sets pull from forgotten pressings, radio broadcasts, and live recordings that were never meant to survive. She finds the fracture lines in the tradition and follows them forward.</div><div class="dj-detail-show">Reference Tracks · Mon</div></div>
+          <div class="dj" data-bio="The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive." data-show="Further Reading · Tue & Thu"><div class="dj-info"><div class="dj-name">FURTHER READING</div><div class="dj-show">Further Reading · Tue & Thu</div></div><div class="dj-right"><span class="djtag">Editorial</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">FURTHER READING</div><div class="dj-detail-bio">The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive.</div><div class="dj-detail-show">Further Reading · Tue & Thu</div></div>
           <div class="dj" data-bio="Rituals is a durational practice. Slow arrivals, soft percussion, songs that hold space before the world gets loud. Each morning set is assembled the night before and played without interruption. You are not supposed to notice the transitions." data-show="Rituals · Daily"><div class="dj-info"><div class="dj-name">RITUALS</div><div class="dj-show">Rituals · Daily</div></div><div class="dj-right"><span class="djtag">Ambient</span><span class="dj-arr">&#8594;</span></div></div>
           <div class="dj-detail"><div class="dj-detail-name">RITUALS</div><div class="dj-detail-bio">Rituals is a durational practice. Slow arrivals, soft percussion, songs that hold space before the world gets loud. Each morning set is assembled the night before and played without interruption. You are not supposed to notice the transitions.</div><div class="dj-detail-show">Rituals · Daily</div></div>
-          <!-- DJ -->
           <div class="dj" data-bio="A transmission from the inner room. Lovers Rock draws from the UK sound system tradition — intimate, late-night, unhurried. The set is built around feeling, not information. Come already knowing where you are." data-show="Lovers Rock · Wed & Sat & Sun"><div class="dj-info"><div class="dj-name">LOVERS ROCK</div><div class="dj-show">Lovers Rock · Wed & Sat & Sun</div></div><div class="dj-right"><span class="djtag">Reggae</span><span class="dj-arr">&#8594;</span></div></div>
           <div class="dj-detail"><div class="dj-detail-name">LOVERS ROCK</div><div class="dj-detail-bio">A transmission from the inner room. Lovers Rock draws from the UK sound system tradition — intimate, late-night, unhurried. The set is built around feeling, not information. Come already knowing where you are.</div><div class="dj-detail-show">Lovers Rock · Wed & Sat & Sun</div></div>
-          <!-- DJ -->
           <div class="dj" data-bio="B-Sides is the other side of everything. Album cuts, regional releases, white labels, acetates. Music that existed in the shadow of something more famous and turned out to be the point all along." data-show="B-Sides · Sun"><div class="dj-info"><div class="dj-name">B-SIDES</div><div class="dj-show">B-Sides · Sun</div></div><div class="dj-right"><span class="djtag">Rarities</span><span class="dj-arr">&#8594;</span></div></div>
           <div class="dj-detail"><div class="dj-detail-name">B-SIDES</div><div class="dj-detail-bio">B-Sides is the other side of everything. Album cuts, regional releases, white labels, acetates. Music that existed in the shadow of something more famous and turned out to be the point all along.</div><div class="dj-detail-show">B-Sides · Sun</div></div>
         </div>
