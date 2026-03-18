@@ -98,6 +98,12 @@ audio{display:none;}
   cursor:pointer;
   transition:background 0.1s;gap:0.5rem;}
 .dj:hover{background:rgba(255,255,255,0.02);}
+.dj-detail{display:none;padding:0.5rem var(--p) 0.7rem;border-bottom:0.5px solid var(--line);border-left:1.5px solid var(--fg);}
+.dj-detail.open{display:block;}
+.dj-detail-name{font-size:0.76rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.35rem;}
+.dj-detail-bio{font-size:0.67rem;font-style:italic;line-height:1.75;margin-bottom:0.35rem;}
+.dj-detail-show{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg);opacity:0.6;}
+.dj.open .dj-arr{opacity:1;}
 .dj:hover .dj-arr{opacity:1;}
 .dj-name{font-size:0.76rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em;}
 .dj-show{font-size:0.62rem;color:var(--fg); margin-top:0.08rem;}
@@ -221,13 +227,29 @@ audio{display:none;}
       <div class="col-head"><span>Programmers &amp; DJs</span></div>
       <div class="col-scroll">
         <div id="dj-list">
-          <!-- ✏️ EDIT YOUR DJS HERE -->
-          <!-- Each .dj needs: data-bio="50 word bio" data-show="SHOW NAME" -->
-          <div class="dj" data-bio="Bio goes here — up to 50 words about this programmer, their practice, influences, and what they bring to the station." data-show="SHOW NAME"><div class="dj-info"><div class="dj-name">EARTHACLIT</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj" data-bio="Bio goes here — up to 50 words about this programmer, their practice, influences, and what they bring to the station." data-show="SHOW NAME"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj" data-bio="Bio goes here — up to 50 words about this programmer, their practice, influences, and what they bring to the station." data-show="SHOW NAME"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj" data-bio="Bio goes here — up to 50 words about this programmer, their practice, influences, and what they bring to the station." data-show="SHOW NAME"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
-          <div class="dj" data-bio="Bio goes here — up to 50 words about this programmer, their practice, influences, and what they bring to the station." data-show="SHOW NAME"><div class="dj-info"><div class="dj-name">DJ NAME</div><div class="dj-show">Show Name · Day</div></div><div class="dj-right"><span class="djtag">Genre</span><span class="dj-arr">&#8594;</span></div></div>
+          <!-- ✏️ EDIT DJS HERE -->
+          <!-- Each .dj needs: data-bio="bio" data-show="SHOW NAME" -->
+          <!-- EARTHACLIT -->
+          <div class="dj" data-bio="bio" data-show="Reference Tracks · Daily"><div class="dj-info"><div class="dj-name">EARTHACLIT</div>
+          <div class="dj-show">Reference Tracks · Daily</div></div><div class="dj-right"><span class="djtag">Archival</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">EARTHACLIT</div>
+          <div class="dj-detail-bio">bio</div>
+          <div class="dj-detail-show">Reference Tracks · Mon</div></div>
+          <!-- DJ -->
+          <div class="dj" data-bio="The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive." data-show="Further Reading · Tue & Thu"><div class="dj-info"><div class="dj-name">FURTHER READING</div>
+          <div class="dj-show">Further Reading · Tue & Thu</div></div>
+          <div class="dj-right"><span class="djtag">Editorial</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">FURTHER READING</div>
+          <div class="dj-detail-bio">The Editors collective compiles each episode from field recordings, off-air captures, and interviews dating back to the 1940s. No nostalgia. Just evidence. Sound as primary document, broadcast as archive.</div><div class="dj-detail-show">Further Reading · Tue & Thu</div></div>
+          <!-- DJ -->
+          <div class="dj" data-bio="Rituals is a durational practice. Slow arrivals, soft percussion, songs that hold space before the world gets loud. Each morning set is assembled the night before and played without interruption. You are not supposed to notice the transitions." data-show="Rituals · Daily"><div class="dj-info"><div class="dj-name">RITUALS</div><div class="dj-show">Rituals · Daily</div></div><div class="dj-right"><span class="djtag">Ambient</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">RITUALS</div><div class="dj-detail-bio">Rituals is a durational practice. Slow arrivals, soft percussion, songs that hold space before the world gets loud. Each morning set is assembled the night before and played without interruption. You are not supposed to notice the transitions.</div><div class="dj-detail-show">Rituals · Daily</div></div>
+          <!-- DJ -->
+          <div class="dj" data-bio="A transmission from the inner room. Lovers Rock draws from the UK sound system tradition — intimate, late-night, unhurried. The set is built around feeling, not information. Come already knowing where you are." data-show="Lovers Rock · Wed & Sat & Sun"><div class="dj-info"><div class="dj-name">LOVERS ROCK</div><div class="dj-show">Lovers Rock · Wed & Sat & Sun</div></div><div class="dj-right"><span class="djtag">Reggae</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">LOVERS ROCK</div><div class="dj-detail-bio">A transmission from the inner room. Lovers Rock draws from the UK sound system tradition — intimate, late-night, unhurried. The set is built around feeling, not information. Come already knowing where you are.</div><div class="dj-detail-show">Lovers Rock · Wed & Sat & Sun</div></div>
+          <!-- DJ -->
+          <div class="dj" data-bio="B-Sides is the other side of everything. Album cuts, regional releases, white labels, acetates. Music that existed in the shadow of something more famous and turned out to be the point all along." data-show="B-Sides · Sun"><div class="dj-info"><div class="dj-name">B-SIDES</div><div class="dj-show">B-Sides · Sun</div></div><div class="dj-right"><span class="djtag">Rarities</span><span class="dj-arr">&#8594;</span></div></div>
+          <div class="dj-detail"><div class="dj-detail-name">B-SIDES</div><div class="dj-detail-bio">B-Sides is the other side of everything. Album cuts, regional releases, white labels, acetates. Music that existed in the shadow of something more famous and turned out to be the point all along.</div><div class="dj-detail-show">B-Sides · Sun</div></div>
         </div>
       </div>
       <div class="col-head" style="flex-shrink:0;border-top:0.5px solid var(--line);"><span>Featured Show</span></div>
@@ -704,63 +726,21 @@ setInterval(fetchAirtime,5000);
   reset();
 })();
 </script>
-<!-- ✏️ WHEN YOU HAVE YOUR FONT: add @font-face below and replace 'YOUR-FONT-NAME' -->
-<style>
-  /* @font-face {
-    font-family: 'YOUR-FONT-NAME';
-    src: url('your-font-file.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  } */
-  #dj-overlay { --ov-font: 'IBM Plex Mono', monospace; /* swap to 'YOUR-FONT-NAME' when ready */ }
-  #dj-ov-name, #dj-ov-bio, #dj-ov-show { font-family: var(--ov-font); }
-</style>
-
-<div id="dj-overlay" style="display:none;position:fixed;inset:0;z-index:9998;cursor:pointer;background:rgba(0,0,0,0.2);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);align-items:center;justify-content:center;">
-  <div style="width:calc(100% - 40px);max-width:100%;min-width:280px;text-align:left;padding:0 20px;box-sizing:border-box;">
-    <div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:0.6rem;">
-      <span style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#ffffff;opacity:0.4;flex-shrink:0;">Programmer</span>
-      <div id="dj-ov-name" style="font-size:clamp(2.5rem,6vw,7rem);font-weight:400;letter-spacing:0.05em;text-transform:uppercase;line-height:1;color:#ffffff;"></div>
-    </div>
-    <div style="display:flex;align-items:baseline;gap:1rem;margin-bottom:0.6rem;">
-      <span style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#ffffff;opacity:0.4;flex-shrink:0;">Bio</span>
-      <div id="dj-ov-bio" style="font-size:clamp(2.5rem,6vw,7rem);font-weight:400;letter-spacing:0.05em;line-height:1.1;color:#ffffff;text-transform:uppercase;"></div>
-    </div>
-    <div style="display:flex;align-items:baseline;gap:1rem;">
-      <span style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#ffffff;opacity:0.4;flex-shrink:0;">Show</span>
-      <div id="dj-ov-show" style="font-size:clamp(2.5rem,6vw,7rem);font-weight:400;letter-spacing:0.05em;line-height:1.1;color:#ffffff;text-transform:uppercase;"></div>
-    </div>
-  </div>
-  <div style="position:absolute;top:2.5rem;right:3rem;font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:#ffffff;opacity:0.3;text-transform:uppercase;">✕ Close</div>
-</div>
-
 <script>
 (function(){
-  const overlay=document.getElementById('dj-overlay');
-  const ovName=document.getElementById('dj-ov-name');
-  const ovBio=document.getElementById('dj-ov-bio');
-  const ovShow=document.getElementById('dj-ov-show');
-
   document.getElementById('dj-list').addEventListener('click',e=>{
     const dj=e.target.closest('.dj');
     if(!dj)return;
-    const name=dj.querySelector('.dj-name').textContent;
-    const bio=dj.dataset.bio||'';
-    const show=dj.dataset.show||dj.querySelector('.dj-show').textContent;
-    ovName.textContent=name;
-    ovBio.textContent=bio;
-    ovShow.textContent=show;
-    overlay.style.display='flex';
-    document.body.style.overflow='hidden';
-  });
-
-  overlay.addEventListener('click',()=>{
-    overlay.style.display='none';
-    document.body.style.overflow='';
-  });
-
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){overlay.style.display='none';document.body.style.overflow='';}
+    const detail=dj.nextElementSibling;
+    if(!detail||!detail.classList.contains('dj-detail'))return;
+    const isOpen=detail.classList.contains('open');
+    // close all
+    document.querySelectorAll('.dj').forEach(d=>d.classList.remove('open'));
+    document.querySelectorAll('.dj-detail').forEach(d=>d.classList.remove('open'));
+    if(!isOpen){
+      dj.classList.add('open');
+      detail.classList.add('open');
+    }
   });
 })();
 </script>
